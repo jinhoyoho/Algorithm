@@ -1,0 +1,50 @@
+import math
+
+n = int(input())
+
+str_n = str(n)
+
+data = list()
+
+for i in range(len(str_n)):
+    rest = n % 10
+    data.append(math.floor(rest))
+    n /= 10
+data.sort()
+
+result = data[0]
+
+for i in range(1,len(data)):
+    if data[i] == 1:
+        result += 1
+    else:
+        result *= data[i]
+
+print(result)
+
+# 0과 1은 더하고 나머지는 곱해야 가장 큰 수를 구할 수 있다. 그런데 0을 더하는 것은 사실상 의미가 없으니 없는셈 취급해도 된다.
+# 숫자로 입력받고 range함수를 사용해주기 위해서 문자열로 바꾸어준다. math에 들어있는 floor(내림)을 통해서 나머지 값을 data1이라는 list값에 하나씩 저장시켜준다.
+# 순서는 상관 없으므로 오름차순으로 정렬시켜준 후 1일때만 더해주고 나머지는 곱해주면 된다.
+
+<해설 코드>
+
+data = input()
+
+#첫 번째 문자를 숫자로 변경하여 대입
+result = int(data[0])
+
+for i in range(1, len(data)):
+    # 두 수 중에서 하나라도 0 혹은 1인 경우, 곱하기보다는 더하기 실행
+    num = int(data[i])
+    if num <=1 or result <= 1:
+        result += num
+    else:
+        result *= num
+        
+print(result)
+
+
+# 그냥 문자로 받아주고 처음 값만 result에 저장하였다. 반복순서는 1부터 N까지이고 그때그때마다 num이라는 변수에 data[i]에 해당하는 정수값을 넣어주었다.
+# 이렇게 표현하면 굳이 10으로 나눈 나머지를 저장 안하고, 변수를 늘릴 필요도 없다. 해당 문자열을 그때 그때마다 정수로 바꾸기!
+# 만약 num이 1보다 작거나 result의 값이 1보다 작은 경우 num을 더해주고 아닌 경우는 다 곱해준다. result가 1보다 작은 경우는 result의 값이 그 전에 0을 더하든 1을 더하든 해서
+1임을 의미하는것이고 result의 값이 1이니깐 곱하는 것보단 더하는 것이 더 큰 값을 만들 수 있다.
