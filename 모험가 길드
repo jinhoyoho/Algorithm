@@ -22,7 +22,7 @@ print(result)
 #최댓값은 i로 표현하였다. i의 값은 data가 정렬되어있기 때문에 현재 공포도의 최댓값을 i로 표현할 수 있다. 따라서 i가 count의 값보다 작거나 같으면 그룹이 결성될 조건을 만족했다고
 할 수 있으므로 해설에는 for문을 이용하여 표현한 것 같다.
 
-<해설 답안>
+<문제 해설>
 n = int(input())
 data = list(map(int, input().split()))
 data.sort()
