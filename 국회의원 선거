@@ -1,0 +1,22 @@
+n = int(input()) #명 수 입력
+
+data = list() #표 수 입력
+
+for i in range(n):
+    data.append(int(input())) 
+
+result = 0
+value = data[0] #1번 후보의 투표수
+del data[0]
+
+if(n != 1):
+    while max(data) >= value:
+        value += 1
+        data[data.index(max(data))] -= 1 #매수 진행
+        result += 1
+
+print(result)
+
+# n으로 후보자 수를 입력받고 data와 for 문을 이용해서 후보자들의 투표수를 각각 받아주었다. 1번 후보자의 투표수를 value값에 저장해주고 다른 후보자들과의 비교를 위해서 list에서 삭제시켜주었다.
+# 여기서 if문이 굉장히 중요한데 만약 후보자가 1번후보 단 1명일 경우를 생각해 주어야 한다. 한 명일 경우 위의 과정에서 list에 남아있는 값이 없게된다. list가 없는 상황에서 max(data)를 
+# 실행시키게 되면 없는 값을 참조하게 되어서 런타임 에러가 발생하게 된다! 따라서 단독후보인지 아닌지를 판별해주고 while 반복문을 통해서 매수를 진행하게 된다.
