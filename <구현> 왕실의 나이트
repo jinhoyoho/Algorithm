@@ -1,0 +1,23 @@
+input_data = input()
+
+row = int(input_data[1])
+column = int(ord(input_data[0])) - int(ord('a')) + 1
+
+moves = [(2, -1), (2, 1), (-2, -1), (-2, +1), (1, -2), (-1, -2), (1, 2), (-1,2)] #나이트가 움직일 수 있는 8가지의 경우의 수
+
+result = 0
+
+for move in moves:
+    nrow = row + move[0]
+    ncolum = column + move[1]
+    if nrow >= 1 and nrow <= 8 and ncolum >= 1 and ncolum <= 8:
+        result += 1
+
+print(result)
+
+#앞서 푼 상하좌우 문제와는 사뭇 다른 느낌의 문제이다.
+#input_data로 나이트의 현재 위치를 받아준다. 예를 들어 a1인 경우 좌표화시켜서 (1, 1)로 표현해야한다.
+#이때 row는 a이므로 a를 유니코드로 변환 -> 정수로 변환 -> 'a'에 해당하는 수 빼기 -> +1로 해당 위치를 정수로 표현할 수 있다. column은 문자열 형태인 숫자이므로 int형으로 변환시켜주기만 하면 된다.
+#moves에 나이트가 움직일 수 있는 8가지의 모든 경우의 수를 저장하고 for 문을 이용해서 8가지 중에서 몇 개가 움직일 수 있는지 찾으면 된다.
+#첫 번째 일때, move는 (2, -1)이므로 move[0]는 2가 되고 move[1]은 -1이 된다. 그러므로 새로운 column에 move[1]만 더해주면 된다.
+#체스판 밖으로 나가면 안되므로 if를 통해서 범위를 잘 조사해준다.
