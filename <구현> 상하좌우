@@ -1,0 +1,24 @@
+n = int(input())
+x, y = 1, 1
+steps = input().split()
+
+dx = [0, 0, -1, 1]
+dy = [1, -1, 0, 0]
+directions = ['R', 'L', 'U', 'D']
+
+for step in steps:
+    for i in range(len(directions)):
+        if step == directions[i]:
+            nx = x + dx[i]
+            ny = y + dy[i]
+
+        if nx < 1 or ny < 1 or nx > n or ny > n:
+            continue
+        
+        x, y = nx, ny
+
+print(x, y)
+
+#2차원 좌표여서 2차원 배열로 해결 할 줄 알았는데 아니었다. n으로 개수를 입력받고 x와 y가 1, 1에서 시작하므로 1을 각각 저장시켜준다.
+#dx, dy를 이용해서 R, L, U, D에 따른 변화량을 리스트에 저장한다. 예를 들어서 R은 Index가 0이므로 dx[0], dy[0]만큼이 변화된다.
+#step 변수에 steps를 하나씩 넣어주고 R, L, U, D 중에 하나가 있는지 비교해준다. nx, ny에 변화량을 저장시켜준다. 변화량이 맵 밖으로 나가게되면 continue로 못가게한다.
