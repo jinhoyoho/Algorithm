@@ -1,0 +1,20 @@
+n, k = map(int, input().split())
+
+coins = list()
+
+for i in range(n):
+    coins.append(int(input()))
+
+coins.sort(reverse = True) #동전 정렬
+
+result = 0
+
+for coin in coins:
+    if k >= coin:
+        result = result + k // coin
+        k %= coin
+
+print(result)
+
+#책에 나와있는 거스름돈 문제와 비슷한 문제유형이어서 쉽게 풀었다.
+#n과 k, coins를 모두 받아준다. 이후 k가 coin보다 크면 coin으로 나눈다. 이때 나머지를 k에다 저장하고 몫을 result에 저장한다.
