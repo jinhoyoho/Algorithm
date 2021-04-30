@@ -1,0 +1,14 @@
+h = int(input())
+
+result = 0
+
+for i in range(h+1):
+    for j in range(60):
+        for k in range(60):
+            if '3' in str(i) + str(j) + str(k):
+                result += 1
+
+print(result)
+
+#모든 시각의 경우의 수를 세서 쉽게 풀 수 있는 문제이다. 파이썬에 in을 이용하면 정말 쉽게 풀 수 있다.
+#시간을 입력받고 말 그대로 시간에 3이 있으면 결과에 1을 증가시킨다. 이때 str로 int를 문자열 변수로 바꾸어준다.
