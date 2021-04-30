@@ -1,0 +1,59 @@
+n, m = map(int, input().split())
+x, y, d = map(int, input().split())
+
+arrive = [[0]*m for _ in range(n)] #도착 데이터
+arrive[x][y] = 1 #현재 좌표 도착 처리
+map_data = list()
+
+for i in range(n):
+    map_data.append(list(map(int, input().split())))
+
+dx = [-1, 0, 1, 0] #북, 동, 남, 서 기준
+dy = [0, 1, 0, -1]
+
+def turn_left():
+    global d
+    d -= 1
+    if d == -1:
+        d = 3
+
+result = 1
+turn_time = 0
+
+while True:
+    turn_left()
+    
+    nx = x + dx[d]
+    ny = y + dy[d]
+    #갈 수 있음
+    if arrive[nx][ny] == 0 and map_data[nx][ny] == 0:
+        arrive[nx][ny] = 1
+        x = nx
+        y = ny
+        result += 1
+        turn_time = 0
+        continue
+    else:
+        turn_time += 1
+    #모두 갈 곳이 없을 경우
+    if turn_time == 4:
+        nx = x - dx[d]
+        ny = y - dy[d]
+        #뒤로 갈 수 있으면
+        if map_data[nx][ny] == 0:
+            x = nx
+            y = ny
+        else:
+            break
+        turn_time = 0
+
+print(result)       
+
+
+#주석의 필요성을 느낀 문제이다. 변수가 많아지고 코드가 길어지니깐 뭐가 뭔지 햇갈렸다.
+#n,m을 입력받고 좌표, 방향을 순서대로 받는다. 그리고 해당 지역에 갔는지 안 갔는지 확인해주는 2차원 배열인 arrive를 만들어준다. 맵은 map_data로 받아준다.
+#현재 위치에 왼쪽이 기준이므로 왼쪽으로 돌았을때 앞이 북쪽이므로 북, 동, 남, 서를 기준으로 해 주었다. (어느쪽이 북쪽이든 상관없다.)
+#왼쪽으로 회전하는 함수를 정의해주고 result와 회전한 회수를 변수로 잡아준다. while문을 이용해서 nx와 ny를 이용해서 회전해서 앞으로 나아갔을때 좌표를 구해준다.
+#if 그곳이 가보지 않은 곳이라면 앞으로 가고 해당 좌표의 arrive배열에 갔다는 표시로 1을 저장해준다.
+#if 4번 다 회전했는데 갈 곳이 없다면 뒤로 간다. turn_time이 4번이면 처음 방향과 같은데 여기서 처음 방향의 dx, dy를 빼주면 반대 방향이 되므로 뒤로 갈 수 있다.
+
