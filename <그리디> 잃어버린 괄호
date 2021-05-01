@@ -1,0 +1,28 @@
+n = input()
+
+count = 0
+
+for i in n:
+    if i == '+':
+        count += 1 #앞에서 부터 +가 나온 회수
+    elif i == '-':
+        break
+
+data_int = list(map(int,n.replace('-','+').split('+')))
+
+sum1 = 0
+sum2 = 0
+
+for i in range(count+1):
+    sum1 += data_int[i]
+
+
+for i in range(count+1, len(data_int)):
+    sum2 += data_int[i]
+
+result = sum1 - sum2
+print(result)
+
+#괄호를 이용하지 않아도 생각을 달리하면 풀 수 있는 문제이다. 맨 앞에서부터 -가 나올때까지 더하고 첫번째로 나온 -를 기준으로 뒤에 있는 모든 수에 괄호를 이용하여 합치고 뺀다고 생각하면 최솟값이
+#나온다. 앞에서부터 +가 -가 나올때까지 나온 횟수를 count라고 하고, data_int에는 숫자를 저장한다. sum1에는 첫 번째 -를 기준으로 앞에 더해야 하는 수들을, sum2에는 -를 기준으로 뒤에 빼야하는
+#수 들의 합이다. 따라서 답은 sum1 - sum2의 값이다.
