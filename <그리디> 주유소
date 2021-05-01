@@ -1,0 +1,18 @@
+n = int(input())
+roads = list(map(int, input().split()))
+costs = list(map(int, input().split()))
+
+m = costs[0] #현재 가격
+#처음은 무조건 가야함
+result = roads[0] * m
+#처음은 했으니 1부터 끝은 고려안하므로 n-1
+for i in range(1, n-1):
+    if m >= costs[i]: #현재 가격이 더 큰 경우
+        m = costs[i]
+    
+    result += m * roads[i]
+
+print(result)
+
+#너무 깊게 생각해서 해맨 문제이다. 단순히 생각해보면 별거 아니였다.
+#가장 작은 가격으로 계속 길을 곱해주면 되는 문제였다. 가격이 현재 가격보다 클 경우 새로 갱신만 해주면 된다.
