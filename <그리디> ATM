@@ -1,0 +1,13 @@
+n = int(input())
+
+times = list(map(int, input().split()))
+times.sort() 
+
+sum = 0
+
+for i in range(n):
+    sum += times[i] * (n-i)
+
+print(sum)
+
+#아주 쉬운 문제이다. 정렬을 한 후 작은 수부터 계속해서 누적해서 더해주면 되는 문제이다.
