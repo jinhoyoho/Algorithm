@@ -1,0 +1,60 @@
+from collections import deque
+
+INF = 987654321
+
+n = int(input())
+graph = []
+for _ in range(n):
+    graph.append(list(map(int, input())))
+
+#상, 하, 좌, 우 입력
+dx = [-1, 1, 0, 0] 
+dy = [0, 0, -1, 1]
+
+count = [] #개수 입력받을 list
+k = -1
+
+def bfs(x, y):
+    global count, k
+    queue = deque()
+    queue.append((x, y))
+    while queue:
+        x, y = queue.popleft() 
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            #좌표가 지도 밖을 벗어나는 경우
+            if nx <= -1 or nx >=n or ny <= -1 or ny >= n:
+                continue
+            #집이 없는 경우
+            if graph[nx][ny] == 0:
+                continue
+            #집이 있는 경우
+            if graph[nx][ny] == 1:
+                #해당 번지수의 집의 개수 증가
+                count[k] += 1
+                #방문 완료
+                graph[nx][ny] = INF
+                queue.append((nx, ny))
+
+for i in range(n):
+    for j in range(n):
+        if graph[i][j] == 1: #집이 있는 경우
+            #방문완료
+            graph[i][j] = INF
+            #새로운 집 발견으로 번지수 증가
+            k += 1
+            count.append(1)
+            bfs(i, j)
+
+#번지수의 개수
+result = len(count)
+print(result)
+#각각의 번지수들의 집의 개수
+count.sort()
+for i in range(result):
+    print(count[i])
+    
+    
+#BFS로 문제를 풀었다. 상, 하, 좌, 우를 설정해서 모두 지나는지 탐색을 해야한다. 큐를 잘 이용하는 것도 중요하다.
+#가장 중요한건 개수를 세는 것인데, 개수는 동적할당을 통해서 처음으로 방문할때만 인덱스를 증가시켰다. 이후에는 해당 인덱스에 +1을 해주었다.
