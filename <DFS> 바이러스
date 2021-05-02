@@ -1,0 +1,33 @@
+n = int(input())
+m = int(input())
+
+graph = [[] for _ in range(n+1)]
+
+for _ in range(m):
+    i, j = map(int, input().split())
+    graph[i].append(j)
+    graph[j].append(i)
+
+for i in range(n+1):
+    graph[i].sort()  
+
+visited = [False] * (n+1) 
+
+def dfs(graph, v, visited):
+    visited[v] = True
+    for i in graph[v]:
+        if not visited[i]:
+            dfs(graph, i, visited)
+
+dfs(graph, 1, visited)
+
+result = 0
+
+for i in range(n+1):
+    if visited[i] == True:
+        result += 1
+
+print(result-1)
+
+#단순한 탐색은 DFS나 BFS 중 아무거나 이용해도 상관없다. 나는 DFS를 이용해서 문제를 해결했다. DFS만 알고 있으면 쉽게 해결할 수 있는 문제이다.
+#주의해야 할 점은 1번 컴퓨터를 통해서 바이러스가 걸린 컴퓨터의 개수를 구하는 것이므로 result의 값에 -1을 해주어야한다.
