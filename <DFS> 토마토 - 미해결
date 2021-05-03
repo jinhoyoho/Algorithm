@@ -1,0 +1,48 @@
+from collections import deque
+
+# M * N 입력
+m, n = map(int, input().split())
+
+#토마토 입력
+graph = []
+for _ in range(n):
+    graph.append(list(map(int, input().split())))
+
+dx = [1, -1, 0, 0]
+dy = [0, 0, -1, 1]
+
+def bfs(x, y):
+    queue = deque()
+    queue.append((x,y))
+    while queue:
+        x, y = queue.popleft()
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            #밖으로 나가는 경우
+            if nx <= -1 or nx >= n or ny <= -1 or ny >= m:
+                continue
+            #익지 않거나 익은 것이라면
+            if graph[nx][ny] == -1 or graph [nx][ny] == 1:
+                continue
+            if graph[nx][ny] == 0:
+                graph[nx][ny] = graph[x][y] + 1
+                queue.append((nx, ny))
+
+#BFS 실행
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 1:
+            bfs(i, j)
+
+result = max(graph)
+result = max(result) - 1
+
+#익지않은 토마토가 있다면
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 0:
+            result = -1
+            break
+
+print(result)
