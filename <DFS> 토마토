@@ -1,0 +1,32 @@
+# M * N 입력
+m, n = map(int, input().split())
+
+#토마토 입력
+graph = []
+
+for _ in range(n):
+    graph.append(map(int, input().split()))
+
+count = 0
+
+def dfs(x, y):
+    if x <= -1 or x >= n or y <= -1 or y >= m:
+        return False
+    #옆에 있는 토마토
+    if graph[x][y] == 0:
+        graph[x][y] = 1
+        global count
+        count += 1
+        dfs(x+1, y)
+        dfs(x-1, y)
+        dfs(x, y+1)
+        dfs(x, y-1)
+        return True
+    return False
+
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 1:
+            dfs(i, j)
+
+print(count)
