@@ -1,0 +1,49 @@
+import sys
+sys.setrecursionlimit(10**6)
+
+T = int(input())
+INF = 987654321 #방문시 INF
+
+count = []
+case = -1
+t = T #복사본
+
+def dfs(x, y):
+    #좌표밖을 벗어나면 False
+    if x <= -1 or x >= n or y <= -1 or y >= m:
+        return False
+    if graph[x][y] == 1:
+        graph[x][y] = INF
+        dfs(x-1, y)
+        dfs(x+1, y)
+        dfs(x, y+1)
+        dfs(x, y-1)
+        return True
+    return False
+
+while T:
+    m, n, k = map(int, input().split())
+    graph = [[0] * m for _ in range(n)]
+
+    for _ in range(k):
+        #연결된 좌표 입력
+        i, j = map(int, input().split())
+        graph[j][i] = 1
+    
+    count.append(0)
+    case += 1
+
+    for i in range(n):
+        for j in range(m):
+            if graph[i][j] == 1:
+                count[case] += 1
+                dfs(i, j)
+    
+    T -= 1
+
+for i in range(t):
+    print(count[i])
+    
+#방문했다는 기록만 남기면 되므로 BFS보다는 DFS를 이용하여 풀었다.
+#1번째 줄과 2번째 줄을 넣어야 런타임에러(RecursiveError)가 나오지 않는다.
+#DFS를 이용하면 쉽게 문제를 풀 수 있으나 주의해야 할 점은 좌표이다. 문제에서의 좌표와 프로그래밍에서의 좌표가 서로 바뀌어있다. 이걸 고려하지 않아서 초반에 문제를 풀때 엄청 헷갈렸다..
