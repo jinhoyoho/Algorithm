@@ -3,6 +3,8 @@ from collections import deque
 # M * N 입력
 m, n = map(int, input().split())
 
+queue = deque()
+
 #토마토 입력
 graph = []
 for _ in range(n):
@@ -11,9 +13,10 @@ for _ in range(n):
 dx = [1, -1, 0, 0]
 dy = [0, 0, -1, 1]
 
-def bfs(x, y):
-    queue = deque()
-    queue.append((x,y))
+def bfs():
+    global queue
+    x = 0
+    y = 0
     while queue:
         x, y = queue.popleft()
         for i in range(4):
@@ -28,15 +31,17 @@ def bfs(x, y):
             if graph[nx][ny] == 0:
                 graph[nx][ny] = graph[x][y] + 1
                 queue.append((nx, ny))
+    return x, y
 
-#BFS 실행
 for i in range(n):
     for j in range(m):
         if graph[i][j] == 1:
-            bfs(i, j)
+            queue.append((i,j))
 
-result = max(graph)
-result = max(result) - 1
+#BFS 실행
+new_x, new_y = bfs()
+
+result = graph[new_x][new_y] -1
 
 #익지않은 토마토가 있다면
 for i in range(n):
@@ -46,3 +51,7 @@ for i in range(n):
             break
 
 print(result)
+
+#BFS를 통해서 문제를 해결했다. queue를 사용하여서 익은 토마토부터 순차적으로 넣고 뺌으로써 주변에 있는 토마토들까지 확장해 나갈 수 있다.
+#이때 18, 19번 줄이 내가 빼먹은 부분이다. 모든 토마토가 익지않았을 경우 bfs를 실행했을때 18, 19번 줄이 없으면 while문장을 실행하지 않는다.
+#그러면 return하는 x와 y값이 없기 때문에 런타임에러가 발생한다. 따라서 x와 y에 0,0의 좌표를 넣어준다. 모든 토마토가 익지 않았으므로 아무좌표나 넣어도 상관없다.
