@@ -1,0 +1,28 @@
+import sys
+
+n = int(sys.stdin.readline().rstrip())
+
+array = []
+for i in range(n):
+    array.append(sys.stdin.readline().rstrip())
+
+array = sorted(array, key = lambda x: x)
+array = sorted(array, key = lambda x: len(x))
+
+index = []
+limit = 0
+
+for i in range(len(array)-1):
+    if array[i] == array[i+1]:
+        index.append(i)
+        limit += 1
+j=0
+for i in range(len(array)):
+    if j < limit and i == index[j]:
+        j += 1
+        continue
+    else:
+        print(array[i])
+        
+#단어를 입력받은 후, 먼저 단어대로 정렬하고 이후에 길이대로 정렬하였다.
+#이때 중복된 단어는 삭제해야하므로 limit를 설정하여서 runtime에러가 발생하지 않도록 설정하였고 같은 단어가 있으면 continue를 통해서 출력하지 않도록 하였다.
