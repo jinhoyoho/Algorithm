@@ -1,0 +1,14 @@
+import sys
+
+n = int(sys.stdin.readline().rstrip())
+
+array = []
+for i in range(n):
+    array.append(list(map(int, sys.stdin.readline().split())))
+
+array = sorted(array, key = lambda x: (x[0], x[1]))
+
+for x, y in array:
+    print(x, y)
+    
+#lambda함수에 대해서 더 공부할 필요가 있을 것 같다. 정렬은 y부터하고 그 다음에 x를 정렬하면 원하는 값이 나온다. 이 생각을 하기까지 오랜시간이 걸렸다..!
