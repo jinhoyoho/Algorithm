@@ -1,0 +1,15 @@
+import sys
+
+n = int(sys.stdin.readline().rstrip())
+
+array = []
+for i in range(n):
+    input_data = sys.stdin.readline().split()
+    array.append((int(input_data[0]), input_data[1]))
+
+array = sorted(array, key = lambda x: x[0])
+
+for data in array:
+    print(data[0], data[1])
+   
+#나이순서와 등록순서를 고려해야하는 내용이다. 근데 애초에 데이터를 입력 받을 때, 등록순서대로 입력을 받으므로 나이순서만 고려해주면 되는 아주 쉬운 문제이다.
