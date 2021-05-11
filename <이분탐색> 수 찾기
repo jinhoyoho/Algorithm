@@ -1,0 +1,32 @@
+import sys
+
+#수 받기
+n = int(sys.stdin.readline().rstrip())
+array = list(map(int, sys.stdin.readline().split()))
+array.sort()
+#원하는 수 받기
+m = int(sys.stdin.readline().rstrip())
+x = list(map(int, sys.stdin.readline().split()))
+
+def binary_sort(array, target, start, end):
+    while start <= end:
+        mid = (start + end) // 2
+        #찾았다면
+        if array[mid] == target:
+            return True
+        #mid가 더 크다면 (왼쪽탐색)
+        if array[mid] > target:
+            end = mid - 1
+        #mid가 더 작다면 (오른쪽탐색)
+        else:
+            start = mid + 1
+    return False
+
+for i in x:
+    result = binary_sort(array, i, 0, n-1)
+    if result:
+        print("1")
+    else:
+        print("0")
+        
+#부품찾기와 비슷한 유형의 문제이다.
