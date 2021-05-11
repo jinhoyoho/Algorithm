@@ -1,0 +1,30 @@
+import sys
+
+n = int(sys.stdin.readline().rstrip())
+array = list(map(int, sys.stdin.readline().split())) #가게의 부품
+m = int(sys.stdin.readline().rstrip())
+x = list(map(int, input().split())) #손님이 요청한 것
+
+array.sort() 
+
+def binary_sort(array, target, start, end):
+    while start <= end:
+        mid = (start + end) // 2
+        #찾은 경우 반환 
+        if array[mid] == target:
+            return mid
+        #mid가 더 큰 경우
+        elif array[mid] > target:
+            end = mid - 1
+        else:
+            start = mid + 1
+    return None
+
+for i in x:
+    result = binary_sort(array, i, 0, n-1)
+    if result != None:
+        print("yes", end = ' ')
+    else:
+        print("no", end = ' ')
+        
+#이진탐색으로 쉽게 풀 수 있는 문제이다.
