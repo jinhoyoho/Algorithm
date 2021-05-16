@@ -1,0 +1,21 @@
+import sys
+input = sys.stdin.readline
+n = int(input().rstrip())
+datas = []
+
+for _ in range(n):
+    datas.append(list(map(int, input().split())))
+datas = sorted(datas, key = lambda x : x[0])
+datas = sorted(datas, key = lambda x : x[1])
+
+final = -1
+count = 0
+
+for data in datas:
+    if data[0] >= final:
+        count += 1
+        final = data[1]
+print(count)
+
+#그리디보다는 정렬에 가까운 문제이다. 회의시작시간을 기준으로 정렬한 후 끝나는 시간으로 정렬하면 마무리 시간을 기준으로 시작시간도 정렬이 된다.
+#이후 시작시간이 끝나는 시간보다 크다면 count에 +1을 해주고 끝나는 시간을 갱신해준다.
