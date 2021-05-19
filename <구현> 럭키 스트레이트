@@ -1,0 +1,16 @@
+N = input()
+
+sum = 0
+length = len(N)
+for i in range(length//2):
+    sum += int(N[i])
+
+for i in range(length//2, length):
+    sum -= int(N[i])
+
+if sum == 0:
+    print("LUCKY")
+else:
+    print("READY")
+    
+#문자열을 하나씩 비교하여 절반일때 더하고 그 이후이면 뺀다. sum1, sum2로 각각 더하고 비교하는 방법도 있는데 쓸데없는 변수가 많아지므로 sum변수 하나만으로 뺀다.
