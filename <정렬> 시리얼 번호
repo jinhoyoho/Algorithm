@@ -1,0 +1,19 @@
+n = int(input())
+data = []
+for _ in range(n):
+    input_data = input()
+    length = len(input_data) # 1.길이
+    sum = 0 # 2.숫자의 합
+    for i in range(length):
+        if input_data[i].isdigit():
+            sum += int(input_data[i])
+    data.append((input_data, sum))
+
+data = sorted(data, key = lambda x: (len(x[0]), x[1], x[0])) #3. 알파벳 x[0]
+
+for i in range(n):
+    print(data[i][0])
+    
+    
+#입력받을때부터 해당 값들을 전부 변수에 저장한다. 이후 새로운 list의 값에 저장한다.
+#lambda함수로 여러개의 기준을 만들 수 있다. 이것을 통해서 정렬한다.
