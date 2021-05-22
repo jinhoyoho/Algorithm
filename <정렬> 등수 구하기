@@ -1,0 +1,33 @@
+def sequential_search(n, target, datas):
+    for i in range(n):
+        if datas[i] == target:
+            return i+1
+
+def search_rank(datas, n, score, p):
+    datas.append(score)
+    datas.sort(reverse = True)
+    rank = sequential_search(n+1, score, datas)
+    #n이 p보다 작으면 무조건 등수에 있음
+    if n < p:
+        return rank
+    #n이 p와 같을 경우 등수에 없을 수도 있음
+    else:
+        #rank에 든 경우
+        if datas[rank-1] > datas[n]:
+            return rank
+        else:
+            return -1
+
+while True:
+    try:
+        n, score, p = map(int, input().split()) 
+        datas = list(map(int , input().split())) 
+        result = search_rank(datas, n, score, p)
+        print(result)
+        break
+    except:
+        print('1')
+        break
+        
+#진짜 힘들었던 문제다... 정렬하고 등수 찾고 그 해당 등수를 출력하기만 하면 될 줄 알았는데 n=0일때도 고려해주어야 한다.
+#n=0이면 datas 리스트에 아무것도 들어가지 않으므로 eof에러가 발생하게 된다.
