@@ -1,0 +1,50 @@
+import sys
+
+datas = sys.stdin.readline().rstrip()
+#결과를 담을 리스트
+result = []
+count = 0
+rest = 0
+
+for data in datas:
+    #만약 데이터가 .이라면
+    if data == '.':
+        div = count // 4 #AAAA출력 회수
+        rest = count - div * 4 # 나머지가 2거나 0
+        if rest == 2 or rest == 0:
+            result.append('AAAA'*div + 'BB'* (rest//2) + '.')
+            count = 0
+        else:
+            result = [] #result 초기화 후 저장
+            result.append(-1)
+            break
+    #데이터가 X라면
+    else:
+        count += 1
+
+#.이 없는 경우
+div = count // 4
+rest = count - div * 4
+if rest == 2 or rest == 0:
+    result.append('AAAA'*div + 'BB'*(rest//2))
+else:
+    result = [] #result 초기화 후 저장
+    result.append(-1)
+
+for data in result:
+    print(data, end='')
+
+
+
+#엄청난 풀이
+board = input()
+
+board = board.replace("XXXX", "AAAA")
+board = board.replace("XX","BB")
+
+if 'X' in board: 
+  print(-1) 
+else: 
+  print(board)
+  
+#board에 XXXX가 있으면 AAAA로 바꾸고 XX가 있으면 BB로 바꾸게한다.(replace) 근데 X가 아직도 남아있으면 교체를 하지 못한것이므로 -1을 출력한다.
