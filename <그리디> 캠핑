@@ -1,0 +1,18 @@
+count = 0
+
+while True:
+    l, p, v = map(int, input().split())
+    if l == 0 and p == 0 and v == 0:
+        break
+    count += 1
+    x = v // p
+    y = v % p
+    #만약 y가 L보다 크다면
+    if y > l:
+        data = x * l + l
+    else:
+        data = x * l + y
+    
+    print("Case {0}: {1}".format(count, data))
+    
+#특정한 수를 입력받았을때 종료가되면 하나의 while문에 담을 수 있도록하자.
