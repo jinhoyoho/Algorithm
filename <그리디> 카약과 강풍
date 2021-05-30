@@ -1,0 +1,31 @@
+n, s, r = map(int, input().split())
+
+#모든 팀 1로 초기화 -> 0번 index와 n번 index도 새로 만들어준다.
+data = [1] * (n+2)
+break_team = list(map(int, input().split()))
+#부서진팀 1빼기
+for i in range(s):
+    data[break_team[i]] -= 1
+more_team = list(map(int, input().split()))
+#여분의 팀 1 더하기 -> 더 가져와서 파괴될 수도 있다 따라서 +-1
+for i in range(r):
+    data[more_team[i]] += 1
+
+#1부터 n까지 비교
+for i in range(1, n+1):
+    if data[i] == 2:
+        if data[i-1] == 0:
+            data[i] = 1
+            data[i-1] = 1
+            continue
+        elif data[i+1] == 0:
+            data[i] = 1
+            data[i+1] = 1
+
+count = data.count(0)
+print(count)
+
+# 놓친부분이 많다.
+1. 여분으로 더 가져온 팀의 카약도 부서질 수 있으므로 2와 0을 저장하는 것이 아니라 +1과 -1을 해준다.
+2. 0202, 2020과 같은 경우가 생길 수 있으므로 하나의 for문에서 앞 뒤로 비교하는 방법을 사용한다.
+3. 그렇게되면 팀의 list가 0과 n번째의 리스트로 2개 더 생기게된다. 근데 애초에 팀의 최대 개수는 10이므로 12개의 list를 만들어도 상관이없다.
