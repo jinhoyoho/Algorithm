@@ -1,0 +1,34 @@
+n = int(input())
+joy = []
+price = []
+H_F_M = []
+
+for _ in range(n):
+    j, p = map(int,input().split())
+    joy.append(j)
+    price.append(p)
+    H_F_M.append(j/p)
+
+H_F_M_copy = sorted(H_F_M, reverse = True)
+#행복지수 1, 2, 3등 저장
+first = H_F_M_copy[0]
+second = H_F_M_copy[1]
+third = H_F_M_copy[2]
+
+for i in range(n):
+    if H_F_M[i] == first:
+        first_index = i
+    elif H_F_M[i] == second:
+        second_index = i
+    elif H_F_M[i] == third:
+        third_index = i
+
+prices = price[first_index] + price[second_index] + price[third_index]
+
+print(prices)
+print(first_index + 1)
+print(second_index + 1)
+print(third_index + 1)
+
+#joy와 price의 입력을 받고 행복지수 list에 바로 입력한다.
+#원본을 건드리지 않고 복사본으로 1, 2, 3등의 행복지수를 저장하고 그에 상응하는 인덱스를 원본에서 찾는다. 이후 
