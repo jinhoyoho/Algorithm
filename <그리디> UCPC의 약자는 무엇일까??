@@ -1,0 +1,15 @@
+data = map(str, input())
+
+ucpc = ['U','C', 'P', 'C']
+count = 0
+
+for letter in data:
+    if letter == ucpc[count]:
+        count += 1
+    if count == 4:
+        break
+
+if count == 4:
+    print("I love UCPC")
+else:
+    print("I hate UCPC")
