@@ -1,0 +1,21 @@
+t = int(input())
+
+while t:
+    j, n = map(int, input().split())
+    #담을 상자
+    box = list()
+    for _ in range(n):
+        row, column = map(int, input().split())
+        box.append(row * column)
+    #내림차순으로 정렬
+    box.sort(reverse = True)
+    #필요한 상자의 개수
+    count = 0
+    #상자 index
+    i = 0 
+    while j > 0:
+        j -= box[i]
+        i += 1
+        count += 1
+    print(count)
+    t-=1
