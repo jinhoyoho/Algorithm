@@ -1,0 +1,47 @@
+while True:
+    data = list(input().split())
+    if data[0] == '0':
+        break
+    #N 삭제
+    del data[0]
+    data.sort()
+    #0이 없는 리스트
+    new_list = []
+    #0의 개수
+    zero_count = data.count('0')
+    #0없는 list생성
+    for data_one in data:
+        if data_one not in '0':
+            new_list.append(data_one)
+    
+    #더할 문자열
+    str1 = new_list[0]
+    str2 = new_list[1]
+
+    while zero_count:
+        #zero_count가 홀수일때 str1에 저장
+        if zero_count % 2 == 1:
+            str1 += '0'
+            zero_count -= 1
+        else:
+            str2 += '0'
+            zero_count -= 1
+    new_list_len = len(new_list)
+    if len(str1) == len(str2):
+        for i in range(2,new_list_len):
+            if i % 2 == 0:
+                str1 += new_list[i]
+            else:
+                str2 += new_list[i]
+    else:
+        for i in range(2, new_list_len):
+            if i % 2 == 1:
+                str1 += new_list[i]
+            else:
+                str2 += new_list[i]
+
+    result = int(str1) + int(str2)
+    print(result)
+    
+    
+#맨 앞에 숫자를 정해주고 이후에 0을 먼저 넣어준다. 0이 짝수개일때랑 홀수개일때가 다르기때문에 잘 구분하여 넣어준다.
