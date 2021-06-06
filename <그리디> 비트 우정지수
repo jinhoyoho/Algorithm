@@ -1,0 +1,25 @@
+t = int(input())
+
+while t:
+    bit1, bit2 = map(str, input().split())
+    new_bit1 = list()
+    new_bit2 = list()
+
+    for i in range(len(bit1)):
+        if bit1[i] != bit2[i]:
+            new_bit1.append(bit1[i])
+            new_bit2.append(bit2[i])
+    
+    bit1_zero = 0
+    bit1_one = 0
+
+    for bit in new_bit1:
+        if bit == '0':
+            bit1_zero += 1
+        else:
+            bit1_one += 1
+
+    count = max(bit1_one, bit1_zero)
+    print(count)
+
+    t-=1
