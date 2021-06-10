@@ -1,0 +1,21 @@
+n = int(input())
+fireworks = list(map(int, input().split()))
+first = fireworks[0]
+last = fireworks[-1]
+
+while True:
+    #폭죽이 3개 남아있다면
+    if n == 3:
+        first -= 1
+        last -= 1
+        result = max(first, last)
+        break
+    #처음 폭죽이 마지막 폭죽보다 더 크다면
+    if first >= last:
+        first -= 1
+    else:
+        last -= 1
+
+    n -= 1
+    
+print(result)
