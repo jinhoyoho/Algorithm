@@ -1,0 +1,10 @@
+x, y = map(int, input().split())
+result = 0
+
+#햇빛을 더 받아야 한다면
+if x >= y:
+    result = x + y + (y // 10)
+else:
+    result = x + y + (x // 10)
+
+print(result)
