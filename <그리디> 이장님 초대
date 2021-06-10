@@ -1,0 +1,20 @@
+n = int(input())
+trees = list(map(int, input().split()))
+#나무들 오름차순 정렬
+trees.sort()
+
+result = n
+
+for i in range(n):
+    day = trees[i] - i
+    #빼는 수가 음수이면
+    if day <= 0:
+        trees[i] = 0
+    else:
+        trees[i] = day
+#아직 안 자란 나무중에서 많이 남은 날
+max_day = max(trees)
+#심은날 + max + 다음날 이장님
+result = n + max_day + 1
+
+print(result)
