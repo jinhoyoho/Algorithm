@@ -1,0 +1,25 @@
+n = int(input())
+
+student_time = list()
+for _ in range(n):
+    s, e = map(int, input().split())
+    student_time.append((s, e))
+
+#등교시간 ASC 정렬
+student_time.sort(key = lambda x: x[0])
+#가장 늦게 등교한 학생
+start_time = student_time[-1][0]
+#하교시간 DSC 정렬
+student_time.sort(key = lambda x: x[1])
+#가장 빨리 하교한 학생
+end_time = student_time[0][1]
+
+result = start_time - end_time
+
+if result <= 0:
+    print('0')
+else:
+    print(result)
+    
+    
+#간단하게 가장 늦게 등교한 학생이랑 가장 빨리 하교한 학생만 비교하면 되는 문제였다
