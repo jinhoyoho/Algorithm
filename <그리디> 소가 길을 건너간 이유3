@@ -1,0 +1,20 @@
+n = int(input())
+
+cows = list()
+for _ in range(n):
+    arrive_time, inspection_time = map(int, input().split())
+    cows.append((arrive_time, inspection_time))
+
+time = 0
+#정렬
+cows.sort(key = lambda x: (x[0], x[1]))
+
+for i in range(n):
+    #소가 더 빨리 도착한 경우
+    if time <= cows[i][0]:
+        time = cows[i][0] + cows[i][1]
+    #시간이 더 큰 경우
+    else:
+        time += cows[i][1]
+
+print(time)
