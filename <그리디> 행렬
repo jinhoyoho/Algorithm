@@ -1,0 +1,29 @@
+n, m = map(int, input().split())
+a_matrix = list()
+b_matrix = list()
+
+for _ in range(n):
+    a_matrix.append(list(map(int, input())))
+
+for _ in range(n):
+    b_matrix.append(list(map(int, input())))
+
+def flip(a_matrix, i, j):
+    for x in range(i, i+3):
+        for y in range(j, j+3):
+            a_matrix[x][y] = 1 - a_matrix[x][y]
+
+result = 0
+
+for i in range(n-2):
+    for j in range(m-2):
+        if a_matrix[i][j] != b_matrix[i][j]:
+            flip(a_matrix, i, j)
+            result += 1
+
+if a_matrix != b_matrix:
+    result = -1
+
+print(result)
+
+#하나씩 비교하여 다를때마다 뒤집는다.
