@@ -1,0 +1,18 @@
+import sys
+
+n, m = map(int, sys.stdin.readline().split())
+
+cards = list(map(int, sys.stdin.readline().split()))
+
+while m:
+    cards.sort()
+    sum_card = cards[0] + cards[1]
+    cards[0] = sum_card
+    cards[1] = sum_card
+
+    m -= 1
+
+result = sum(cards)
+print(result)
+
+#매번 정렬하고 선택하고 덮어씌우고
