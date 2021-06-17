@@ -1,0 +1,61 @@
+import sys
+
+n = int(sys.stdin.readline().rstrip())
+sticks = list()
+
+for _ in range(n):
+    l, h = map(int, sys.stdin.readline().split())
+    sticks.append((l, h))
+
+#좌표를 기준으로 정렬
+sticks.sort(key = lambda x: x[0])
+max_index = sticks.index(max(sticks, key=lambda x : x[1])) #h(y좌표) 최댓값
+#창고의 높이와 좌표를 담을 리스트
+wh = list()
+
+#맨 왼쪽 좌표 저장
+wh.append((sticks[0][0], sticks[0][1]))
+i = 0 #index
+
+#최댓값 이전을 기준
+while True:
+    height = wh[-1][1]
+    #높이가 클면 스택에 저장
+    if i == max_index:
+        break
+    if height < sticks[i][1]:
+        wh.append((sticks[i][0], sticks[i][1]))
+    i += 1
+
+#마지막 저장
+i = n-1
+wh.append((sticks[i][0], sticks[i][1]))
+
+while True:
+    height = wh[-1][1]
+    #높이가 크면 스택에
+    if i == max_index:
+        wh.append((sticks[i][0], sticks[i][1]))
+        break
+    if height < sticks[i][1]:
+        wh.append((sticks[i][0], sticks[i][1]))
+
+    i -= 1
+#x를 기준으로 정렬
+wh.sort(key = lambda x: x[0])
+max_index = wh.index(max(wh, key=lambda x : x[1]))
+result = 0
+for i in range(len(wh)):
+    #최댓값 기준으로 최댓값 이전
+    if i == max_index:
+        result += wh[i][1]
+    elif i < max_index:
+        result += (wh[i+1][0] - wh[i][0]) * wh[i][1]
+    else: # i > max_index
+        result += (wh[i][0] - wh[i-1][0]) * wh[i][1]
+    
+print(result)
+
+
+
+
