@@ -1,0 +1,22 @@
+from collections import deque
+
+n = int(input()) #사람수
+start, end = map(int, input().split()) #촌수 계산
+m = int(input())
+people = [[] for _ in range(n+1)] #사람 연결
+distance = [-1] * (n+1) #사람간의 거리
+distance[start] = 0 #자기는 거리 0
+for _ in range(m):
+    x, y = map(int, input().split())
+    people[x].append(y)
+    people[y].append(x) #양방향 연결
+
+q = deque([start])
+while q:
+    now = q.popleft() 
+    for i in people[now]:
+        if distance[i] == -1:
+            distance[i] = distance[now] + 1
+            q.append(i)
+
+print(distance[end])
