@@ -1,0 +1,37 @@
+dx = [1, -1, 0, 0]
+dy = [0, 0, 1, -1]
+
+def dfs(foot, x, y):
+    if x <= -1 or x >= h or y <= -1 or y >= w:
+        return False
+    if foot[x][y] == 0 and graph[x][y] == 1:
+        foot[x][y] = 1 #방문기록
+        dfs(foot, x - 1, y)
+        dfs(foot, x + 1, y)
+        dfs(foot, x, y - 1)
+        dfs(foot, x, y + 1)
+        dfs(foot, x - 1 , y - 1)
+        dfs(foot, x - 1, y + 1)
+        dfs(foot, x + 1, y - 1)
+        dfs(foot, x + 1, y + 1)
+        return True
+    return False
+
+while True:
+    w, h = map(int, input().split())
+    if w == 0 and h == 0:
+        break
+    count = 0
+    graph = []
+    foot = [[0] * w for _ in range(h)]
+    for _ in range(h):
+        graph.append(list(map(int, input().split())))
+
+    for i in range(h):
+        for j in range(w):
+            if dfs(foot, i, j) == True:
+                count += 1
+    
+    print(count)
+    
+#대각선 조심!
