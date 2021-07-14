@@ -1,0 +1,24 @@
+a, b = map(int, input().split())
+find = False
+count = 0
+def dfs(x, y):
+    global find, count
+    count += 1
+    if x > y:
+        return False
+    if x == y:
+        find = True
+        print(count)
+        return
+    dfs(x*2, y)
+    count -= 1
+    dfs(int(str(x) + "1") , y)
+    count -= 1
+
+dfs(a, b)
+
+if not find:
+    print("-1")
+
+
+#전체 탐색. 연산자 탐색과 비슷한 문제이다. 대신 계산 회수를 counting 해줘야 하므로 count -= 1 을 dfs끝나는데에다 넣어준다.
