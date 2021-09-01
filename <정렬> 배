@@ -1,0 +1,25 @@
+n = int(input())
+cranes = list(map(int, input().split()))
+cranes.sort(reverse= True) #무게순 정렬
+m = int(input())
+boxes = list(map(int, input().split()))
+boxes.sort(reverse = True)
+result = 0
+while boxes:
+    if cranes[0] < boxes[0]: #이동 불가능
+        result = -1
+        break
+    for i in range(n):
+        for j in range(len(boxes)):
+            if cranes[i] >= boxes[j]:
+                del(boxes[j])
+                break
+    result += 1
+    
+print(result)
+
+크레인과 박스 모두 무게순으로 내림차순 정렬한다.
+가장 큰 무게의 박스를 크레인이 들지 못하면 -1
+크레인이 박스를 들 수 있다면 해당 박스를 옮긴것으로 처리하고 boxes 리스트에서 삭제한다.
+이후 break는 for j 구문을 탈출하므로 for i는 정상적으로 돌아간다. 즉 모든 크레인이 한번씩 박스를 옮기게 된다.
+이후 result +1 을 해주면 답을 구할 수 있다.
