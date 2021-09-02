@@ -1,0 +1,32 @@
+n, m = map(int, input().split())
+lessons = list(map(int, input().split()))
+
+start = max(lessons)
+end = sum(lessons)
+
+while start <= end:
+    mid = (start + end) // 2
+    
+    count = 0
+    sum_lessons = 0
+    for lesson in lessons:
+        if sum_lessons + lesson > mid: #블루레이 크기를 넘긴다면
+            count += 1
+            sum_lessons = 0
+        
+        sum_lessons += lesson
+    
+    if sum_lessons:
+        count += 1
+    
+    if count <= m:
+        result = mid
+        end = mid - 1
+    else:
+        start = mid + 1
+    
+print(result)
+
+#이분탐색을 블루레이의 크기를 기준으로 수행하면 된다.
+#start에 max를 사용하게 되면 최대 길이를 가진 영상이 하나 담기게 되므로 저렇게 사용한 것이고, end에 sum을 사용한 이유는 모든 강의가 하나의 블루레이에 담기게 되는 경우를 나타낸 것이다.
+#이후 블루레이의 개수를 탐색하므로써 m개보다 작거나 같으면 답을 성립하므로 result에 저장하고 end = mid - 1을 수행하고 크면 성립을 하지 않으므로 start = mid + 1을 수행한다.
