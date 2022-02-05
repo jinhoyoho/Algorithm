@@ -1,0 +1,91 @@
+from collections import deque
+from copy import copy
+
+m, n = map(int, input().split())
+num_list = list(map(int, input().split()))
+
+queue = deque()
+for i in range(m):
+    queue.append(i+1) #1부터 i+1까지
+
+def pop_left(queue, target): #왼쪽값 빼기
+    value = queue.popleft()
+    queue.appendleft(value)
+    cnt = 0
+    if value == target:
+        queue.popleft()
+    else:
+        while value != target:
+            value = queue.popleft()
+            if value == target:
+                break
+            queue.append(value)
+            cnt += 1
+
+    left_queue = queue
+
+    return cnt, left_queue
+
+
+def pop_right(queue, target): #왼쪽값 빼기
+    value = queue.pop()
+    queue.append(value)
+    cnt = 0
+    
+    if value == target:
+        queue.pop()
+        cnt = 1
+        right_queue = queue
+    else:
+        while value != target:
+            value = queue.pop()
+            queue.appendleft(value)
+            cnt += 1
+        queue.popleft()
+        right_queue = queue
+
+    return cnt, right_queue
+result = 0
+
+for i in range(n):
+    queue_copy = queue.copy() #queue 복사
+
+    target = num_list[i] #값
+
+    cnt_left, queue_left = pop_left(queue_copy, target) #왼쪽으로 이동시
+    queue_copy = copy(queue) #비었으니 다시 복사
+    cnt_right, queue_right = pop_right(queue_copy, target) #오른쪽으로 이동시
+    
+    if cnt_left > cnt_right: #cnt_right가 작을경우
+        queue = queue_right #채택된 값 붙여넣기
+        cnt = cnt_right #작은값 채택
+    else:
+        queue = queue_left
+        cnt = cnt_left
+    result += cnt
+
+
+print(result)
+
+#dequeue을 사용하는 문제
+
+from collections import deque 
+n,m = list(map(int,input().split())) 
+value = list(map(int,input().split())) 
+q = deque([i+1 for i in range(n)]) 
+count = 0 
+for x in value: 
+    while True: 
+        if q.index(x) == 0: 
+            q.popleft() # 1번 로직 
+            break # 위치 0과의 거리 차이로 왼쪽으로 이동할 지 오른쪽으로 이동할 지를 결정 
+        if q.index(x) - 0 <= len(q) - q.index(x): # 2번 왼쪽으로 이동하기 로직 
+            q.append(q.popleft()) 
+            count += 1 
+        else: 
+            q.appendleft(q.pop()) # 3번 오른쪽으로 이동하기 로직 
+            count += 1
+print(count)
+
+출처: https://seongbindb.tistory.com/57 [SeongbinDB]
+모범답안 
