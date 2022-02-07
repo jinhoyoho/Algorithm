@@ -55,7 +55,3 @@ for i in range(len(wh)):
         result += (wh[i][0] - wh[i-1][0]) * wh[i][1]
     
 print(result)
-
-
-
-
