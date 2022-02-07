@@ -1,0 +1,20 @@
+n, m = map(int, input().split())
+D_list = set() #듣도못한사람
+B_list = set() #보도못한사람
+#듣도못한사람 입력
+for _ in range(n):
+    D_list.add(input())
+#보도못한사람 입력
+for _ in range(m):
+    B_list.add(input())
+
+DBJ_list = sorted(list(D_list & B_list)) #D_list와 B_list의 교집합을 구한 후 정렬한 값 저장
+
+print(len(DBJ_list)) #듣보잡 리스트의 수
+for name in DBJ_list: #듣보잡에 저장된 이름
+    print(name) #출력
+    
+    
+    
+입력을 add메서드를 사용하였고 add안에 input()함수를 쓴 것이 획기적이었다.
+정렬과 동시에 DBJ리스트를 입력한 것도 좋은 코드인 것 같다.
