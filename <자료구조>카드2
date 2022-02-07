@@ -1,0 +1,27 @@
+from collections import deque
+
+n = int(input())
+
+cards = deque([i for i in range(1, n+1)]) #1부터 n까지의 카드 저장
+
+while len(cards) != 1:
+    cards.popleft() #맨 위 카드 제거
+    cards.append(cards.popleft()) #맨 위 카드를 아래로
+
+print(cards[0])
+
+
+
+#일정한 규칙을 찾으면 시간을 단축시킬 수 있다.
+input = int(input()) 
+square = 2 
+while True: 
+    if (input == 1 or input == 2): 
+        print(input) 
+        break 
+    square *= 2 
+    if (square >= input): 
+        print((input - (square // 2)) * 2) 
+        break
+
+출처: https://tooo1.tistory.com/88 [개발자 퉁이리]
