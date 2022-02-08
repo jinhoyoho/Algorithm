@@ -1,0 +1,24 @@
+n = int(input())
+
+for _ in range(n):
+    result = 0 #판별식
+    stack = list() #괄호를 담는 스택
+    PT = str(input()) #괄호 입력
+    if len(PT) % 2 == 1: #입력 개수가 홀수이면 무조건 NO
+        print("NO")
+    else:
+        for i in range(len(PT)):
+            if PT[i] == '(': #만약 ( 괄호라면
+                stack.append('(') #넣기
+            elif PT[i] == ')' and stack: #만약 ) 괄호이고 PT가 비어있지 않다면
+                stack.pop() #빼기
+            else: #아무것도 없는데 ) 괄호가 나온다면
+                print("NO")
+                result = 1
+                break
+        if stack: #for문이 끝났는데 PT가 비어있지 않다면
+            print("NO")
+        elif result == 1: #이미 NO를 출력했다면
+            continue
+        else: #비어있다면
+            print("YES")
