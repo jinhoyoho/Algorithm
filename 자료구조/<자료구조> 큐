@@ -1,0 +1,58 @@
+from collections import deque
+import sys
+
+def Qisempty(queue): #empty 명령어
+    if not queue: #비어있으면
+        return 1
+    else: #비어있지 않으면
+        return 0
+
+def Size(queue):
+    return len(queue)
+
+def Pop(queue): #pop명령어
+    if Qisempty(queue) == 1: #비어있으면
+        return -1
+    else:
+        return queue.popleft() #맨 왼쪽 반환
+
+def Front(queue):
+    if Qisempty(queue) == 1: #비어있으면
+        return -1
+    else:
+        return queue[0] #맨 앞에 있는 정수
+
+def Back(queue):
+    if Qisempty(queue) == 1:
+        return -1
+    else:
+        return queue[-1] #맨 뒤에 있는 정수
+
+def Push(queue, x):
+    queue.append(x)
+
+queue = deque()
+
+n = int(sys.stdin.readline()) #n개의 명령어
+for i in range(n):#n개의 명령어 실행
+    command = sys.stdin.readline().split() #명령어 입력
+    
+    if command[0] == 'push': #push명령어 실행
+        Push(queue, command[1])
+    
+    elif command[0] == 'pop':
+        print(Pop(queue))
+    
+    elif command[0] == 'size':
+        print(Size(queue))
+    
+    elif command[0] == 'empty':
+        print(Qisempty(queue))
+    
+    elif command[0] == 'front':
+        print(Front(queue))
+    
+    elif command[0] == 'back':
+        print(Back(queue))
+
+#python에는 switch case 문을 지원하지 않으므로 if else문이나 dictionary를 이용해야한다.
