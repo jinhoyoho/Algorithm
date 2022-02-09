@@ -1,0 +1,25 @@
+import sys
+from collections import deque
+
+test_case = int(sys.stdin.readline().rstrip())
+
+for _ in range(test_case):
+    n, m = map(int, sys.stdin.readline().split()) #n, m 입력
+    doq = deque(list(map(int, sys.stdin.readline().split())))
+    idx = deque(list(range(1, len(doq)+1))) #인덱스 리스트
+    idx[m] = 'target' #index 목표 설정
+
+    order = 1 #순서
+    while True:
+        if max(doq) == doq[0]: #최댓값이 맨 앞으로 왔을때
+            if idx[0] == 'target': #만약 찾는 값이라면
+                print(order) #순서 출력
+                break
+            else: #아니라면
+                doq.popleft() #삭제
+                idx.popleft() #삭제
+                order += 1
+        else:
+            doq.append(doq.popleft())
+            idx.append(idx.popleft())
+#인덱스와 문서 중요도를 같이 움직이는 문제였다. 해당 인덱스에 target을 설정하여 값을 찾는다.
