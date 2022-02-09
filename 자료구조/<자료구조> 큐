@@ -56,4 +56,3 @@ for i in range(n):#n개의 명령어 실행
         print(Back(queue))
 
 #python에는 switch case 문을 지원하지 않으므로 if else문이나 dictionary를 이용해야한다.
-
