@@ -1,0 +1,20 @@
+n, k = map(int, input().split())
+
+circle = list(i+1 for i in range(n)) #원 앉는 순서
+result = list() #결과
+idx = 0 #인덱스
+
+while circle:
+    idx += (k-1) #인덱스 더하기
+    while idx >= n:
+        idx -= n
+    result.append(circle.pop(idx))
+    n -= 1
+
+print("<", end ='')
+for i in range(len(result)-1):
+    print("%d, "%result[i], end = '')
+print(result[-1], end = '')
+print(">")
+
+#출력에 꽤 애를 먹었는데 end 옵션을 이용해서 다음줄로 가는것을 막는다.
