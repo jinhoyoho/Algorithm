@@ -1,0 +1,14 @@
+n = int(input())
+
+a_list = list(map(int, input().split())) #a배열
+b_list = list(map(int, input().split())) #b배열
+
+a_list.sort(reverse = True) #내림차순 정렬
+b_list.sort() #오름차순 정렬
+
+result = 0
+
+for i in range(n):
+    result += a_list[i] * b_list[i] #a*b
+
+print(result)
