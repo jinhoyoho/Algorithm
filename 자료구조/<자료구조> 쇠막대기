@@ -1,0 +1,14 @@
+input_data = input()
+stick = list() #stick stack 
+result = 0 #결과
+for i in range(len(input_data) - 1):
+    if input_data[i] == '(': #( 괄호일때
+        if input_data[i+1] == '(': #다음께 ( 일때
+            stick.append('stick')
+        else: #')'일 경우 -> 레이저 발사
+            result += len(stick)
+    else: #) 괄호일때
+        if input_data[i+1] == ')': #) 일때
+            stick.pop()
+            result += 1
+print(result)
