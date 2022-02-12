@@ -25,3 +25,22 @@ for _ in range(n):
             print(heapq.heappop(heap_plus)) #작은값을 출력한다
             
 #minus는 최대힙, plus는 최소힙을 사용하여서 문제를 푼다.
+
+
+#모범답안
+import sys
+import heapq
+
+n = int(input())
+q = []
+
+for i in range(n):
+    a = int(sys.stdin.readline().rstrip())
+    if a != 0:
+        heapq.heappush(q, (abs(a), a))
+    else:
+        if not q:
+            print(0)
+        else:
+            print(heapq.heappop(q)[1])
+튜플을 집어 넣음으로써 절댓값을 먼저 기준으로 정렬하고, 그 다음 값으로 정렬한다. 이후에 튜플중에 [1]을 출력한다.
