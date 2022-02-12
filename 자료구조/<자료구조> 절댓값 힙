@@ -1,0 +1,27 @@
+import sys
+import heapq
+
+n = int(sys.stdin.readline().rstrip()) #n개의 명령어 입력
+heap_minus = [] #음수 힙을 담을 리스트
+heap_plus = [] #양수 힙을 담을 리스트
+
+
+for _ in range(n):
+    data = int(sys.stdin.readline().rstrip())
+    if data < 0: #data가 음수이면
+        heapq.heappush(heap_minus, -data)
+    elif data > 0: #data가 양수이면
+        heapq.heappush(heap_plus, data)
+    elif data == 0: #data가 0이면
+        if not heap_minus and not heap_plus: #둘다 비어있으면
+            print(0)
+        elif not heap_minus: #minus힙이 비어있으면
+            print(heapq.heappop(heap_plus))
+        elif not heap_plus: #plus힙이 비어있으면
+            print(-heapq.heappop(heap_minus))
+        elif heap_plus[0] >= abs(heap_minus[0]): #plus가 더 크다면
+            print(-heapq.heappop(heap_minus)) #작은값을 출력한다
+        else: #minus가 더 크다면
+            print(heapq.heappop(heap_plus)) #작은값을 출력한다
+            
+#minus는 최대힙, plus는 최소힙을 사용하여서 문제를 푼다.
