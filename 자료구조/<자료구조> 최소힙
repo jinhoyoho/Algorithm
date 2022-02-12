@@ -1,0 +1,15 @@
+import sys
+import heapq
+
+n = int(sys.stdin.readline().rstrip()) #n개의 명령어 입력
+heap = [] #힙을 담을 리스트
+
+for _ in range(n):
+    data = int(sys.stdin.readline().rstrip())
+    if data == 0: #input이 0이면
+        if not heap: #heap이 비어있으면
+            print("0") #0출력
+        else:
+            print(heapq.heappop(heap))
+    else:
+        heapq.heappush(heap, data)
