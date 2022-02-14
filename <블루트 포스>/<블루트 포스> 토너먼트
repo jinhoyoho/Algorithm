@@ -1,0 +1,35 @@
+import sys
+
+n, jimin, hansu = map(int, sys.stdin.readline().split())
+
+round = 0
+
+while jimin != hansu:
+    if jimin % 2 == 1: #jimin 2로 나눈게 홀수면
+        jimin = (jimin + 1) // 2
+    else:
+        jimin //= 2
+    
+    if hansu % 2 == 1: #hansu가 2로 나눈게 홀수면
+        hansu = (hansu + 1) // 2
+    else:
+        hansu //= 2
+    
+    round += 1
+
+print(round)
+
+#모범답안
+import sys
+
+n, jimin, hansu = map(int, sys.stdin.readline().split())
+
+round = 0
+
+while jimin != hansu:
+    jimin -= (jimin // 2)
+    hansu -= (hansu // 2)
+    
+    round += 1
+
+print(round)
