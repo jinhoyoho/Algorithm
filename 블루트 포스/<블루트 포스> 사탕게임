@@ -1,0 +1,49 @@
+import sys
+
+n = int(sys.stdin.readline().rstrip())
+
+candy_list = [list(sys.stdin.readline().rstrip()) for _ in range(n)]
+
+result = 0 #결과 저장
+
+#최댓값 체크
+def check(candy):
+
+    Max= 1
+
+    #가로 비교
+    for i in range(n):
+        cnt = 1
+        for j in range(1, n):
+            if candy[i][j] == candy[i][j-1]: #다음께 같다면
+                cnt += 1
+            else:
+                cnt = 1
+            Max = max(Max, cnt)
+        
+        cnt = 1
+        for j in range(1, n):
+            if candy[j][i] == candy[j-1][i]:
+                cnt += 1
+            else:
+                cnt = 1
+            Max = max(Max, cnt)
+    return Max
+
+for i in range(n): #N*N번 시행
+    for j in range(n):
+        #양 옆 비교
+        if j+1 < n:
+            candy_list[i][j], candy_list[i][j+1] = candy_list[i][j+1], candy_list[i][j] #swap진행
+            count = check(candy_list)
+            candy_list[i][j], candy_list[i][j+1] = candy_list[i][j+1], candy_list[i][j] #원위치
+            result = max(count, result)
+        
+        #위 아래
+        if i+1 < n:
+            candy_list[i][j], candy_list[i+1][j] = candy_list[i+1][j], candy_list[i][j] #swap진행
+            count = check(candy_list)
+            candy_list[i][j], candy_list[i+1][j] = candy_list[i+1][j], candy_list[i][j] #원위치
+            result = max(count, result)
+
+print(result)
