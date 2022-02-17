@@ -1,0 +1,23 @@
+import sys
+
+case = int(sys.stdin.readline().rstrip()) #숫자 입력
+
+def P(n):
+    if n == 0 or n == 1:
+        return 1
+    #이미 계산한 값이라면
+        
+    if number[n]:
+        return number[n]
+
+    number[n] = n * P(n-1)
+    return number[n]
+    
+number = [0] * 31 #31까지의 순열을 담을 리스트(memozation)
+
+for _ in range(case): #case번 반복
+    n, m = map(int, sys.stdin.readline().split()) #n, m개의 사이트
+    print(int(P(m)/(P(n)*P(m-n))))
+    
+    
+#조합을 순열로 바꾸고, 순열을 memoization하여 해결한 문제이다.
