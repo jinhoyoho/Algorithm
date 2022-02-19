@@ -1,0 +1,13 @@
+import sys
+
+n = int(sys.stdin.readline().rstrip())
+dp = [i for i in range(n+1)]
+
+for i in range(1, n+1): #1부터 n까지
+    for j in range(1, i): #1부터 i-1까지
+        if j*j > i: #j제곱이 i보다 크다면
+            break
+        if dp[i] > dp[i-j*j] + 1: #넣으려는 수가 제곱을 뺀 수 + 1보다 크다면 -> 1은 1의 제곱을 더하는 행위이다
+            dp[i] = dp[i-j*j] + 1
+
+print(dp[n])
