@@ -4,7 +4,7 @@ n = int(sys.stdin.readline().rstrip())
 mod = 15746
 
 #저장
-dp = [0] * (n+1)
+dp = [0] * 1000001
 dp[1] = 1 % mod
 dp[2] = 2 % mod
 
