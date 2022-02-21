@@ -7,7 +7,7 @@ for _ in range(n):
 
 dp = [0] * (n+1) #동적 프로그래밍
 
-for i in range(n-2, -1, -1):
+for i in range(n-1, -1, -1):
     if work_data[i][0] + i <= n: #그 날을 선택할 수 있는 경우
         dp[i] = max(work_data[i][1] + dp[work_data[i][0] + i], dp[i+1]) #선택했을때의 값과 안했을때의 값 비교
     else: #선택 못하는 경우이므로 그대로 복사
