@@ -1,0 +1,10 @@
+n = int(input())
+
+number = [float(input()) for _ in range(n)] #숫자 저장
+
+for i in range(1, n):
+    number[i] = max(number[i], number[i] * number[i-1])
+
+print("%.3f"%max(number))
+
+#기존 숫자에 덮어쓸 수 있는 이유는 곱한 수가 더 크다면 어차피 곱해질것이기 때문이다.
