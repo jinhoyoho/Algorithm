@@ -1,0 +1,18 @@
+n, k = map(int, input().split())
+
+dp = [[1] * i for i in range(n+1)] #2차원 배열 만들기
+
+def pascal(n, k):
+    if k == 0 or k == n-1: #양 끝일때 1반환
+        return 1
+        
+    if dp[n][k] != 1:
+        return dp[n][k]
+    
+    dp[n][k] = pascal(n-1, k-1) + pascal(n-1, k)
+    
+    return dp[n][k]
+
+print(pascal(n, k-1))
+
+#바텀-업 방식을 사용하여 문제를 해결하였다. 바텀-업 방식은 재귀함수를 사용하여 문제를 해결하는 방식이다.
