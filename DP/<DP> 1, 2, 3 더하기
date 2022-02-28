@@ -1,0 +1,35 @@
+#DP풀이
+t = int(input()) #test case 입력
+
+
+dp = [1] * 12 #동적프로그래밍
+dp[1], dp[2], dp[3] = 1, 2, 4
+for i in range(4, 12):
+    dp[i] = sum(dp[i-3:i])
+        
+while t > 0:
+    n = int(input())
+    print(dp[n])
+    t -= 1
+
+
+
+#DFS 풀이
+t = int(input()) #test case 입력
+
+def plus(n):
+    if n == 1:
+        return 1
+    elif n == 2:
+        return 2
+    elif n == 3:
+        return 4
+    else:
+        return plus(n-1) + plus(n-2) + plus(n-3)
+
+while t > 0:
+    n = int(input())
+    print(plus(n)) #재귀
+    t -= 1
+    
+#둘이 같은 시간을 결과로 나타낸다.
