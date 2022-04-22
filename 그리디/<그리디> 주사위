@@ -1,0 +1,22 @@
+n = int(input())
+square_list = list(map(int, input().split())) # a~f까지 입력
+
+a = [0 for i in range(3)]
+
+#마주보는 면 중에서 작은 수 선택
+a[0] = min(square_list[0], square_list[5]) 
+a[1] = min(square_list[1], square_list[4])
+a[2] = min(square_list[2], square_list[3])
+
+a.sort() #작은 수 정렬
+
+min3 = a[0] + a[1] + a[2] #작은 수 3개 더하기 (3개의 면 노출)
+min2 = a[0] + a[1] #작은 수 2개 더하기 (2개의 면 노출)
+min1 = a[0] #작은 수 1개 더하기 (1개의 면 노출)
+
+result = (n-2)*4*min1 + (n-2)**2*5*min1 + min2*4 + min2*(n-2)*4 + min3*4 + min2*(n-2)*4
+
+if n == 1: #주사위가 하나일 경우
+    result = sum(square_list) - max(square_list)
+
+print(result)
