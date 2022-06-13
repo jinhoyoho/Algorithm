@@ -1,0 +1,20 @@
+n = int(input()) #센서 개수
+k = int(input()) #집중국 개수
+sensor = list(map(int, input().split())) #센서 좌표
+sensor.sort() #좌표 오름차순 정렬
+
+sensor_distance = list() #센서 거리 차이
+for i in range(1, n): #센서개수-1(n-1)번 반복
+    sensor_distance.append(sensor[i] - sensor[i-1])
+
+sensor_distance.sort() #센서 거리 오름차순 정렬
+
+for _ in range(k-1): #k-1번 실행
+    if not sensor_distance: #비어있다면
+        sensor_distance = [0]
+        break
+    sensor_distance.pop(-1) #가장 큰 수 제거
+
+print(sum(sensor_distance))
+
+#센서의 개수와 거리를 고려하여서 문제를 푼다. 긴 거리를 k-1개만큼 제거한다.
