@@ -1,0 +1,40 @@
+n, m = map(int, input().split())
+books_location = list(map(int, input().split())) #책 좌표
+
+plus_array = list() #양수 책 좌표
+minus_array = list() #음수 책 좌표
+
+for location in books_location:
+    if location < 0: #음수일 경우
+        minus_array.append(int(location))
+    else:
+        plus_array.append(int(location))
+
+minus_array.sort() #오름차순 정렬
+plus_array.sort(reverse = True) #내림차순 정렬
+
+if minus_array and plus_array: #비어있지 않다면
+    max_value = (-minus_array[0] if -minus_array[0] > plus_array[0] else plus_array[0]) #절댓값 큰 값 저장
+elif not minus_array: #minus_array가 비어있다면
+    max_value = plus_array[0]
+else:
+    max_value = -minus_array[0]
+    
+result = 0 #결과값
+index = 0 #인덱스
+
+while True:
+    if index >= len(plus_array):
+        break
+    result += plus_array[index] * 2
+    index += m
+    
+index = 0
+
+while True:
+    if index >= len(minus_array):
+        break
+    result += (-minus_array[index]) * 2
+    index += m
+
+print(result - max_value)
