@@ -1,0 +1,76 @@
+a, b = map(int, input().split()) #맵 크기 입력
+graph = [[1] * a for _ in range(b)] #맵 저장
+n, m = map(int, input().split()) #로봇 개수(n), 명령 횟수(m) 입력
+
+robots = list() #로봇의 정보를 담을 리스트
+direction = {'N':0, 'E':1, 'S':2, 'W':3} #북동남서 사전으로 저장
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1] #북 동 남 서 변화 저장
+
+for i in range(n):
+    x, y, d = input().split()
+    robots.append([b - int(y), int(x) - 1, int(direction[d])]) #좌표와 위치 리스트 형태로 저장
+    graph[robots[i][0]][robots[i][1]] = 2#맵 위에 로봇 설치 
+
+def turn_left(d): #왼쪽으로 틀기
+    d -= 1
+    if d == -1:
+        d = 3
+    return d
+
+def turn_right(d): #오른쪽으로 틀기
+    d += 1
+    if d == 4:
+        d = 0
+    return d
+
+def go_forward(x, y, d):
+    global graph
+    nx, ny = x + dx[d], y + dy[d] #현재 위치에서 앞으로 가기
+    if nx <= -1 or nx >= b or ny <= -1 or ny >= a: #벽에 부딪힌다면
+        return (-1, -1)
+    elif graph[nx][ny] == 2: #로봇에 부딪힌다면
+        return (-2, -2)
+    else:
+        graph[nx][ny] = 2 #이동
+        graph[x][y] = 1 #이동
+        return (nx, ny)
+
+token = 0 #OK 출력을 위한 토큰
+
+for _ in range(m): #명령 m번 실행
+    if token == 1:
+        break
+    index, command, count = input().split()
+    index = int(index) - 1 #로봇 인덱스
+    count = int(count) #정수로 변환
+    for _ in range(count): #명령 count만큼 실행
+        x, y, d = robots[index][0], robots[index][1], robots[index][2] #해당 로봇의 x, y, d
+        if command == 'F': #오른쪽으로 돌기
+            result = go_forward(x, y, d) #해당 로봇의 x, y, d 매개변수
+            if result == (-1, -1):
+                print('Robot {0} crashes into the wall'.format(index + 1))
+                token = 1
+                break
+            elif result == (-2, -2):
+                nx, ny = x + dx[d], y + dy[d]
+                crush_index = -1
+                for i in range(n): #n개의 로봇 찾기
+                    if nx == robots[i][0] and ny == robots[i][1]:
+                        crush_index = i
+                print('Robot {0} crashes into robot {1}'.format(index + 1, crush_index + 1))
+                token = 1
+                break
+            else:
+                robots[index] = [result[0], result[1], d] #변한 위치 저장
+                
+        elif command == 'L': #왼쪽으로 돌기
+            robots[index] = [x, y, turn_left(d)]
+        else: #오른쪽으로 돌기
+            robots[index] = [x, y, turn_right(d)]
+
+if token == 0:
+    print('OK')
+
+#우리가 아는 직교 좌표계는 (x ,y)이지만 프로그래밍으로 들어오게 되면 (y, x)가 되고 심지어 방향도 반대가 된다.
+따라서 좌표를 잘 고려하여 코드를 작성해야한다.
