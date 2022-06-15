@@ -1,0 +1,39 @@
+import sys
+from collections import deque
+
+t = int(input()) #테스트 케이스
+
+for _ in range(t): #t번 반복
+    p = list(input()) #함수 list 입력
+    n = int(input()) #숫자 개수 입력
+    input_list = deque(sys.stdin.readline().rstrip()[1:-1].split(',')) #덱을 이용한 입력
+
+    if n == 0:
+        input_list = deque() #비어있음
+
+    token = 0 #비어있을 경우 error
+    
+    count = 0 #왼쪽 오른쪽 삭제
+    
+    for function in p:
+        if function == 'D': #삭제
+            if input_list: #비어있지 않으면
+                if count % 2 == 0: #짝수 -> 왼쪽
+                    input_list.popleft()
+                else:
+                    input_list.pop()
+            else: #비어있으면
+                token = 1
+                break
+        else: #'R'인 경우
+            count += 1
+
+    if p.count('R') % 2 == 1: #홀수 번 뒤집어야 뒤집힘
+        input_list.reverse()
+    
+    if token == 0:
+        print('['+ ','.join(input_list) + ']')
+    else:
+        print('error')
+        
+#R이 나올때마다 뒤집으면 시간초과가 걸린다
