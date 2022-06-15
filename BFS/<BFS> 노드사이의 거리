@@ -1,0 +1,29 @@
+from collections import deque
+
+n, m = map(int, input().split()) #노드 개수와 알고 싶은 노드 수 입력
+graph = [[] for _ in range(n+1)] #n개의 노드 그래프 생성
+
+for _ in range(n-1):
+    node1, node2, cost = map(int, input().split()) #노드1, 노드2, 비용 입력
+    graph[node1].append((node2, cost))
+    graph[node2].append((node1, cost)) #그래프 서로 연결
+
+def bfs(node1, node2):
+    visited = [False] * (n+1)
+    queue = deque()
+    queue.append((node1, 0))
+    visited[node1] = True
+    while queue:
+        v, c = queue.popleft() #큐에 있는 것 빼기
+        
+        if v == node2: #노드 발견
+            return c
+        
+        for i, cost in graph[v]:
+            if not visited[i]:
+                visited[i] = True
+                queue.append((i, cost + c))
+    
+for _ in range(m):
+    node1, node2 = map(int, input().split())
+    print(bfs(node1, node2))
