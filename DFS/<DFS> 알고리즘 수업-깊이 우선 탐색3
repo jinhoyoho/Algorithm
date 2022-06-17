@@ -11,7 +11,7 @@ def dfs(n, m, r):
     
     for v in graph[r]:
         if not visited[v]:
-            result[v] = result[r] + 1
+            result[v] = result[r] + 1 #깊이 계
             dfs(n, m, v)
 
 input_set = [] #입력set
@@ -20,7 +20,7 @@ for _ in range(m):
     input_set.append((u, v))
 
 input_set.sort(key = lambda x : x[1]) 
-input_set.sort(key = lambda x : x[0]) #내림차순 정렬
+input_set.sort(key = lambda x : x[0]) #오름차순 정렬
  
 for u, v in input_set: #간선개수만큼 루프
     graph[u].append(v)
