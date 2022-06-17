@@ -1,0 +1,42 @@
+import sys
+
+n, m = map(int, sys.stdin.readline().split()) #가로 세로 입력
+graph = list() #2차원 맵 만들기
+visited = [[False] * n for _ in range(m)] #방문 로그
+for _ in range(m):
+    graph.append(list(sys.stdin.readline().rstrip())) #맵 입력
+result_us, result_op = 0, 0 #우리팀과 상대팀의 총 위력
+
+def dfs(x, y, target):
+    global count_B, count_W
+    
+    if x <= -1 or x >= m or y <= -1 or y >= n: #맵을 벗어난 경우
+        return #종료
+        
+    if visited[x][y] == False: #방문하지 않은 경우
+        if graph[x][y] == target: #찾고자 하는 팀이라면
+            visited[x][y] = True #방문하기
+            if target == 'B':
+                count_B += 1 #개수 세기
+            else:
+                count_W += 1
+            
+            dfs(x-1, y, target) #상하좌우 탐색
+            dfs(x+1, y, target)
+            dfs(x, y-1, target)
+            dfs(x, y+1, target)
+            return True
+    return False
+    
+for i in range(m): #세로
+    for j in range(n): #가로
+        if graph[i][j] == 'B':
+            count_B = 0
+            if dfs(i, j, 'B') == True:
+                result_op += count_B ** 2
+        else:
+            count_W = 0
+            if dfs(i, j, 'W') == True:
+                result_us += count_W ** 2
+
+print(result_us, result_op)
