@@ -11,7 +11,7 @@ def dfs(n, m, r):
     
     for v in graph[r]:
         if not visited[v]:
-            result[v] = result[r] + 1
+            result[v] = result[r] + 1 #Depth
             dfs(n, m, v)
 
 input_set = [] #입력set
