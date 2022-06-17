@@ -1,0 +1,37 @@
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #가로 세로 입력
+graph = [list(input()) for _ in range(m)] #그래프 입력
+visited = [[False] * n for _ in range(m)] #방문 로그
+result_us, result_op = 0, 0 #우리팀과 상대팀의 총 위력
+
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1] #하우상좌 변화
+
+def bfs(x, y, target):
+    cnt = 0
+    queue = deque() #좌표 입력
+    queue.append((x, y))
+    visited[x][y] = True
+
+    while queue:
+        x, y = queue.popleft()
+        for i in range(4):
+            nx, ny = x + dx[i], y + dy[i] #새로운 좌표
+            if 0 <= nx < m and 0 <= ny < n: #벽 안에 있는 경우
+                if not visited[nx][ny] and graph[nx][ny] == target: #방문하지 않고 찾고자하는 색이라면
+                    visited[nx][ny] = True #방문하기
+                    cnt += 1
+                    queue.append((nx, ny))
+    return cnt + 1
+    
+for i in range(m): #세로
+    for j in range(n): #가로
+        if graph[i][j] == 'B' and not visited[i][j]:
+            result_op += bfs(i, j, 'B') ** 2
+        elif graph[i][j] == 'W' and not visited[i][j]:
+            result_us += bfs(i, j, 'W') ** 2
+
+print(result_us, result_op)
