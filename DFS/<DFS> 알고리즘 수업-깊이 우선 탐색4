@@ -1,0 +1,34 @@
+import sys
+sys.setrecursionlimit(10**5)
+
+n, m, r = map(int, input().split()) #node, edge, start 입력
+graph = [[] for _ in range(n+1)] #(n+1)개의 그래프 생성
+visited = [False] * (n+1) #(n+1)개의 방문기록
+
+def dfs(n, m, r):
+    global count, result, visited
+    visited[r] = True
+    
+    for v in graph[r]:
+        if not visited[v]:
+            result[v] = result[r] + 1
+            dfs(n, m, v)
+
+input_set = [] #입력set
+for _ in range(m):
+    u, v = map(int, input().split())
+    input_set.append((u, v))
+
+input_set.sort(key = lambda x : x[1], reverse = True) 
+input_set.sort(key = lambda x : x[0], reverse = True) #내림차순 정렬
+ 
+for u, v in input_set: #간선개수만큼 루프
+    graph[u].append(v)
+    graph[v].append(u) #그래프 저장
+
+result = [-1 for _ in range(n+1)] #결과값 저장
+result[r] = 0 #시작은 0
+
+dfs(n, m, r)
+for i in range(1, n+1):
+    print(result[i])
