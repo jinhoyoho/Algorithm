@@ -6,7 +6,7 @@ graph = [[] for _ in range(n+1)] #(n+1)개의 그래프 생성
 visited = [False] * (n+1) #(n+1)개의 방문기록
 
 def dfs(n, m, r):
-    global count, result, visited
+    global result, visited
     visited[r] = True
     
     for v in graph[r]:
