@@ -1,0 +1,43 @@
+## Depth와 관련된 문제 ##
+
+from collections import deque
+import sys
+
+def bfs(n, m, r):
+    global result
+    visited = [False] * (n+1) #방문노드
+    visited[r] = True #시작노드 방문
+    count = 0 #순서
+    queue = deque([r])
+    result[r] = count
+
+    while queue:
+        v = queue.popleft()
+        count = result[v] + 1 
+        for i in graph[v]:
+            if not visited[i]: #방문하지 않았으면
+                result[i] = count
+                visited[i] = True
+                queue.append(i)
+    
+n, m, r = map(int, sys.stdin.readline().split()) #노드개수, 간선개수, 시작노드 입력
+graph = [[] for _ in range(n+1)] #1번부터 n개까지의 그래프
+
+input_set = [] #입력set
+for _ in range(m):
+    u, v = map(int, sys.stdin.readline().split())
+    input_set.append((u, v))
+
+input_set.sort(key = lambda x : x[1])
+input_set.sort(key = lambda x : x[0])
+
+for u, v in input_set: #간선개수만큼 루프
+    graph[u].append(v)
+    graph[v].append(u) #그래프 저장
+
+result = [-1 for _ in range(n+1)] #1번부터 n개까지 결과 저장
+
+bfs(n, m, r)
+
+for i in range(1, n+1):
+    print(result[i])
