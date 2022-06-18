@@ -1,0 +1,35 @@
+import sys
+input = sys.stdin.readline
+
+def line(x, y):
+    global index
+    start = x
+    end = y
+    while True:
+        if index >= n:
+            return end - start #길이 반환
+        
+        if dots[index][0] > end: #끝보다 x좌표가 더 크다면
+            return end - start #길이 반환
+        else: #작은경우
+            if dots[index][1] > end:
+                end = dots[index][1] #end 갱신
+        
+        index += 1
+
+n = int(input())
+dots = list()
+for _ in range(n):
+    dots.append(tuple(map(int, input().split())))
+
+dots.sort(key = lambda x : x[0]) #x좌표를 기준으로 오름차순
+
+index = 0 #인덱스
+result = 0 #결과 저장
+while True:
+    if index >= n :
+        break
+        
+    result += line(dots[index][0], dots[index][1])
+
+print(result)
