@@ -1,0 +1,43 @@
+import sys
+sys.setrecursionlimit(100*100) #반복제한 설정
+input = sys.stdin.readline
+
+def dfs(x, y):
+    global count #넓이를 세는 변수
+    if x <= -1 or x >= m or y <= -1 or y >= n: #범위를 벗어나면
+        return #종료
+
+    if not visited[x][y] and graph[x][y] == 1: #방문한적이 없고 빈 영역이면
+        visited[x][y] = True #방문처리
+        graph[x][y] = 3 #맵 수 변경
+        count += 1 #넓이 1 증가
+        dfs(x+1, y)
+        dfs(x-1, y)
+        dfs(x, y-1)
+        dfs(x, y+1) #상하좌우 탐색
+        return True
+    return False
+
+m, n, k = map(int, input().split()) #세로, 가로, 직사각형 개수 입력
+graph = [[1] * n for _ in range(m)] #n*m graph
+visited = [[False] * n for _ in range(m)] #방문 로그 저장
+
+for _ in range(k): #좌표 입력
+    x1, y1, x2, y2 = map(int, input().split())
+    for i in range(m-y2, m-y1): #(m-y2)부터 (m-1-y1)까지
+        for j in range(x1, x2): #(x1)부터 (x2-1)까지 
+            graph[i][j] = 2 #범위의 사각형 색칠
+
+result = list() #결과를 담을 리스트
+
+for i in range(m):
+    for j in range(n):
+        if graph[i][j] == 1: #빈 영역이면
+            count = 0 #개수 초기화
+            if dfs(i, j) == True: #dfs성공적으로 종료시
+                result.append(count) #결과 저장
+
+print(len(result))
+result.sort()
+print(" ".join(str(result[i]) for i in range(len(result))))
+        
