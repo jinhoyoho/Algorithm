@@ -18,14 +18,12 @@ def line(x, y):
         index += 1
 
 n = int(input())
-dots = list()
-for _ in range(n):
-    dots.append(tuple(map(int, input().split())))
-
+dots = list(tuple(map(int, input().split())) for _ in range(n))
 dots.sort(key = lambda x : x[0]) #x좌표를 기준으로 오름차순
 
 index = 0 #인덱스
 result = 0 #결과 저장
+
 while True:
     if index >= n :
         break
