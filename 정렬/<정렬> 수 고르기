@@ -1,0 +1,26 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+num = list(int(input()) for _ in range(n)) #숫자 저장
+
+num.sort() # 오름차순 정렬
+
+result = 9876543210
+
+left, right = 0, 1 #포인터
+
+while left < n and right < n:
+    if num[right] - num[left] == m:
+        result = m
+        break
+    elif num[right] - num[left] > m:
+        result = min(num[right] - num[left], result)
+        left += 1
+    else:
+        right += 1
+
+print(result)
+        
+#포인터 알고리즘을 이용하여 푼다.
+index를 left와 right로 지정한 후에 배열을 가리키는 포인터를 조건에 맞게 조금씩 움직인다.
