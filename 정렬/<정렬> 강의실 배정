@@ -1,0 +1,23 @@
+import heapq
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #수업 개수
+course = list(tuple(map(int, input().split())) for _ in range(n))
+course.sort() #오름차순 정렬
+
+room = list() #강의실 개수 저장
+heapq.heappush(room, course[0][1]) #끝나는 시간 저장
+
+for i in range(1, n):
+    start, end = course[i][0], course[i][1] #시작시간, 끝나는 시간
+
+    if room[0] > start: #강의가 안 끝나는 경우
+        heapq.heappush(room, end) #강의실 하나 추가
+    else:
+        heapq.heappop(room) #수업을 빼고
+        heapq.heappush(room, end) #다음 수업 진행
+
+print(len(room))
+
+#우선순위 큐에 대한 문제이다. 우선순위 큐에 대한 공부를 더 해야할 것 같다.
