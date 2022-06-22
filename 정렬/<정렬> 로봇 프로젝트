@@ -1,0 +1,30 @@
+import sys
+input = sys.stdin.readline
+while True:
+    try:
+        x = int(input()) * 1e+7 #cm단위를 nm로 변경
+        n = int(input()) #레고 조각 수
+        length = list(int(input()) for _ in range(n)) #길이 입력
+        length.sort() #길이 오름차순
+        
+        left = 0 #왼쪽 포인터
+        right = n-1 #오른쪽 포인터
+        token = True
+        
+        while left < right:
+            if length[left] + length[right] == x: #구멍을 막을 수 있다면
+                token = False
+                print("yes", length[left], length[right])
+                break
+            elif length[left] + length[right] > x: #합이 더 크다면
+                right -= 1
+            else: 
+                left += 1
+                
+        if token:
+            print("danger")
+    except:
+        break
+      
+#테스트 케이스가 얼만지 모르므로 try except구문을 이용해서 문제를 해결해야 한다.
+마찬가지로 투포인터 문제
