@@ -1,0 +1,24 @@
+from math import sqrt
+import sys
+input = sys.stdin.readline
+
+def get_c(mid):
+    h1 = sqrt(x**2 - mid **2)
+    h2 = sqrt(y**2 - mid**2)
+
+    return h1*h2 / (h1+h2)
+
+x, y, c = map(float, input().split())
+start, end = 0, min(x, y)
+
+while end - start > 1e-6:
+    mid = (start + end) / 2
+    if get_c(mid) >= c: #구한 c가 기존 c보다 크거나 같으면
+        result = mid
+        start = mid
+    else: #작으면 -> 잘못된 값이므로 저장x
+        end = mid
+
+print("{}".format(round(result, 4)))
+
+#구한 c에 대하여 적절하게 크기 조정을 통해서 값 찾기
