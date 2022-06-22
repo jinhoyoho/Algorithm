@@ -1,0 +1,22 @@
+import sys
+input = sys.stdin.readline
+
+#보기 쉽게 정렬
+x1, y1 = map(int, input().split())
+x2, y2 = map(int, input().split())
+x3, y3 = map(int, input().split())
+
+vector_ab = (x2 - x1, y2 - y1) #점P1에서 P2로 가는 벡터
+vector_ac = (x3 - x1, y3 - y1) #점P1에서 P3로 가는 벡터
+
+result = vector_ab[0] * vector_ac[1] - vector_ab[1] * vector_ac[0] #외적의 z방향 값
+
+if result == 0:
+    print(0)
+elif result < 0:
+    print(-1)
+else:
+    print(1)
+    
+#세 점을 두 벡터로 만들고 외적을 이용하여 음수이면 시계, 양수이면 반시계 방향으로 풀었다.
+CCW(Counter Clock Wise)알고리즘
