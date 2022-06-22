@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+n, k = map(int, input().split())
+tall = list(map(int, input().split())) #키 입력
+diff = list() #키 차이를 저장할 리스트
+
+for i in range(n-1):
+    diff.append(tall[i+1] - tall[i])
+
+diff.sort() #오름차순 정렬
+
+result = 0 #결과 저장
+
+for i in range(n-k):
+    result += diff[i]
+
+print(result)
