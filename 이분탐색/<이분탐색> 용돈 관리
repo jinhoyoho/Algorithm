@@ -1,0 +1,29 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #n일 m번
+money = list(int(input()) for _ in range(n)) #n일 동안 사용할 금액 입력
+
+start, end = max(money), n * 10000 #시작과 끝
+
+while start <= end:
+    mid = (start + end) // 2
+    count = 1 #인출
+
+    for day in money:
+        if day > mid:  #하루에 쓸 돈보다 인출한 돈이 적다면
+            mid = (start + end) // 2 
+            count += 1 #다시 인출
+        mid -= day #돈 사용
+
+    mid = (start + end) // 2 #초기화
+    
+    if count <= m: #m번보다 작거나 같게 인출했다면
+        result = mid
+        end = mid - 1 #돈 줄이기
+    else:
+        start = mid + 1 #돈 늘리기
+
+print(result)
+            
+#money리스트에 가장 큰 값이 start로 되어야 한다. 그 이유는 n일 동안 한번은 꼭 그 값을 사용하기 때문에 해당 값이 꼭 필요하다.
