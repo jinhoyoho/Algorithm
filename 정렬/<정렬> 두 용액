@@ -1,0 +1,29 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+liquids = list(map(int, input().split()))
+liquids.sort() #오름차순 정렬
+
+left = 0
+right = n-1 #좌, 우 포인터 지정
+answer = 2e+9+1 #기준값
+result = list() #결과를 담을 리스트
+
+while left < right:
+    left_value = liquids[left] #왼쪽값
+    right_value = liquids[right] #오른쪽값
+    sum = left_value + right_value #혼합
+
+    if abs(sum) < answer: #혼합값이 0에 더 가깝다면
+        answer = abs(sum) #비교할 혼합값 갱신
+        result = [left_value, right_value] #결과 갱신
+
+    if sum < 0: #sum이 음수라면
+        left += 1
+    else: #양수라면
+        right -= 1
+
+print(result[0], result[1])
+
+#투포인터를 이용한 풀이
