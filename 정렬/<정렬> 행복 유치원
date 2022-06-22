@@ -10,9 +10,6 @@ for i in range(n-1):
 
 diff.sort() #오름차순 정렬
 
-result = 0 #결과 저장
+print(sum(diff[:n-k]))
 
-for i in range(n-k):
-    result += diff[i]
-
-print(result)
+#n부터 k까지의 합을 뱐뵥몬애 야낸 sum함수를 이용해서 간단하게 표현 할 수 있다.
