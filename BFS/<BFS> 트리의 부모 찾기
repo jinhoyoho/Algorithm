@@ -25,6 +25,7 @@ while queue:
             
 for i in range(2, n+1):
     print(result[i])
-    
+##print("\n".join(str(result[i]) for i in range(2, n+1)))## 반복문 한줄로 작성하기
+
 #방향 상관없이 일단 저장하고 그 이후에 1부터 BFS를 통해서 결과를 따로 저장한다.
 부모 노드와 현재 노드를 같이 저장해줌으로써 결과 리스트에 쉽게 저장할 수 있다.
