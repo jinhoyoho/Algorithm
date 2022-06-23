@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+x_dot = list() #x좌표를 담을 리스트
+y_dot = list() #y좌표를 담을 리스트
+
+for _ in range(3):
+    x, y = map(int, input().split())
+    x_dot.append(x), y_dot.append(y)
+
+for i in range(3):
+    if x_dot.count(x_dot[i]) != 2: #x좌표가 두번 나오지 않으면
+        x = x_dot[i]
+        
+    if y_dot.count(y_dot[i]) != 2: #y좌표가 두번 나오지 않으면
+        y = y_dot[i]
+
+print(x, y)
+
+#쉬운 문제지만 구현하는데 조금 오래걸렸다..
