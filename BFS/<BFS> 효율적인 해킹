@@ -1,0 +1,41 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #n개의 컴퓨터, m개의 간선 입력
+graph = [[] for _ in range(n+1)]
+for i in range(m):
+    u, v = map(int, input().split()) #신뢰 관계 입력
+    graph[v].append(u) #그래프 입력
+
+def bfs(x):
+    visited = [False] * (n+1) #방문기록
+    visited[x] = True #방문처리
+    count = 1 #결과 연산
+    queue = deque()
+    queue.append(x) #x부터 시작
+
+    while queue: #큐가 빌때까지
+        out = queue.popleft()
+        for node in graph[out]: #out중에서
+            if not visited[node]: #방문하지 않았다면
+                visited[node] = True
+                count += 1
+                queue.append(node)
+
+    return count
+
+result = list() #결과를 담을 리스트
+max = -1 #비교할 대상
+
+
+for i in range(1, n+1):
+    count = bfs(i)
+
+    if max == count: #최대값이 같다면
+        result.append(i) #결과 추가
+    if count > max: #비교 대상보다 크다면
+        result = [i] #새로운 리스트 생성
+        max = count #비교 대상 업데이트
+
+print(" ".join(str(result[i]) for i in range(len(result))))
