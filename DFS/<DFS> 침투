@@ -7,12 +7,7 @@ graph = [list(input().rstrip()) for _ in range(m)] #그래프 입력
 visited = [[False] * n for _ in range(m)] #방문기록
 
 def dfs(y, x): #y가 세로, x가 가로
-    global token
-    if -1 < y < m and -1 < x < n and not visited[y][x]: #지도 안에 있으면서 방문한 적이 없으면
-        if graph[y][x] == '0': #전류가 흐르는 경우
-            if y == m-1: #끝에 도달한 경우
-                token = 1 #도착
-                return True
+    if -1 < y < m and -1 < x < n and not visited[y][x] and graph[y][x] == '0': #지도 안에 있으면서 방문한 적이 없고 전류가 흐른다면
             visited[y][x] = True
             graph[y][x] = 2 #탐색처리
             dfs(y + 1, x)
@@ -21,11 +16,10 @@ def dfs(y, x): #y가 세로, x가 가로
             dfs(y, x - 1) #상하좌우 탐색
     return False
 
-token = 0
 for i in range(n):
     dfs(0, i)
 
-if token:
+if 2 in graph[m-1]:
     print("YES")
 else:
     print("NO")
