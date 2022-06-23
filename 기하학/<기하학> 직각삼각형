@@ -1,0 +1,12 @@
+import sys
+input = sys.stdin.readline
+
+while True:
+    dot = list(map(int, input().split()))
+    dot.sort() #오름차순 정렬
+    if dot == [0, 0, 0]:
+        break
+    if dot[2] ** 2 == dot[1] ** 2 + dot[0] ** 2:
+        print("right")
+    else:
+        print("wrong")
