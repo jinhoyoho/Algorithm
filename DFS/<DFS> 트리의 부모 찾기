@@ -1,0 +1,24 @@
+import sys
+sys.setrecursionlimit(1000000)
+input = sys.stdin.readline
+
+n = int(input()) #노드 개수 입력
+graph = [[] for _ in range(n+1)] #그래프
+result = [[] for _ in range(n+1)] #결과
+visited = [False] * (n+1)
+
+for _ in range(n-1):
+    u, v = map(int, input().split())
+    graph[u].append(v)
+    graph[v].append(u)
+
+def dfs(graph, node, visited):
+    visited[node] = True
+    for current in graph[node]:
+        if not visited[current]: #방문하지 않았으면
+            result[current] = node #결과 저장
+            dfs(graph, current, visited)
+
+dfs(graph, 1, visited)
+
+print("\n".join(str(result[i]) for i in range(2, n+1)))
