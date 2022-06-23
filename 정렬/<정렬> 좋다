@@ -1,0 +1,26 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #개수 입력
+num = list(map(int, input().split())) #수들 입력
+num.sort() #정렬
+result = 0 #결과
+
+for i in range(n):
+    target = num[i] #찾으려는 수
+    tmp = num[:i] + num[i+1:] #i를 제외한 num list 복사
+    left, right = 0, n-2 #투 포인터
+    while left < right:
+        sum = tmp[left] + tmp[right] #합
+        if target == sum: #찾았으면
+            result += 1
+            break
+        elif target > sum: #찾으려는 값이 더 크다면
+            left += 1
+        else: #찾으려는 값이 더 작다면
+            right -= 1
+
+print(result)
+
+#정렬은 투 포인터 문제랑 많이 나온다. 0이랑 해당 숫자를 잘 고려하면 쉽게 풀 수 있는 문제이다.
+이중 반복문으로 더하면서 찾는게 아니라 하나의 반복문으로 target을 지정하고 해당 원소를 제외한 리스트를 만들어서 찾는게 더 나은 방법이다. 
