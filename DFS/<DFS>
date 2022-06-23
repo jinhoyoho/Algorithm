@@ -1,0 +1,34 @@
+import sys
+input = sys.stdin.readline
+sys.setrecursionlimit(1000*1000)
+
+m, n = map(int, input().split()) #세로, 가로 입력
+graph = [list(input().rstrip()) for _ in range(m)] #그래프 입력
+visited = [[False] * n for _ in range(m)] #방문기록
+
+def dfs(y, x): #y가 세로, x가 가로
+    global token
+    if -1 < y < m and -1 < x < n and not visited[y][x]: #지도 안에 있으면서 방문한 적이 없으면
+        if graph[y][x] == '0': #전류가 흐르는 경우
+            if y == m-1: #끝에 도달한 경우
+                token = 1 #도착
+                return True
+            visited[y][x] = True
+            graph[y][x] = 2 #탐색처리
+            dfs(y + 1, x)
+            dfs(y - 1, x)
+            dfs(y, x + 1)
+            dfs(y, x - 1) #상하좌우 탐색
+    return False
+
+token = 0
+for i in range(n):
+    dfs(0, i)
+
+if token:
+    print("YES")
+else:
+    print("NO")
+    
+#가로랑 세로가 자꾸 햇갈린다. 앞으로는 n과 x를 가로로, m과 y를 세로로 정해서 풀자.
+(n과 x가 한쌍, m과 y가 한쌍)
