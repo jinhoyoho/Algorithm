@@ -1,0 +1,17 @@
+import sys
+input = sys.stdin.readline
+n = int(input()) #수열 개수 입력
+num = list(map(int, input().split())) #수열 입력
+dp = [num[0] if num[0] > 0 else 0] + [0] * n #맨 첫번째 수 저장 & (n+1)개의 dp생성
+result = num[0] #결과값
+
+for i in range(1, n):
+    dp[i] = dp[i-1] + num[i]
+    result = max(result, dp[i]) #현재 값과 그 전의 값 중 최대
+    if dp[i] < 0: #더한 값이 음수라면
+        dp[i] = 0 #dp초기화
+        
+print(result)
+
+#처음만 음수이고 나머지가 양수 일 수도 있기때문에 dp테이블 초기화를 저렇게 하였다.
+결과값에는 처음 수로 초기화 시켜준다.
