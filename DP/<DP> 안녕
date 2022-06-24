@@ -1,0 +1,27 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #사람수 입력
+L = [0] + list(map(int, input().split())) #소모하는 체력 입력(n+1개)
+J = [0] + list(map(int, input().split())) #얻는 행복 입력(n+1개)
+
+dp = [[0] * 100 for _ in range(n+1)] #100 X (n+1)의 이차원 리스트
+
+for i in range(1, n+1): #1번부터 N번까지
+    for j in range(1, 100): #1부터 100까지의 체력
+        if L[i] < j: #갖고 있는 체력보다 작다면(같으면 안됨):
+            #인사를 안 한 경우와 인사를 한 경우 중에 비교
+            dp[i][j] = max(dp[i-1][j], J[i] + dp[i-1][j-L[i]]) 
+        else: #갖고 있는 체력보다 많다면
+            dp[i][j] = dp[i-1][j]
+
+print(dp[n][99])
+
+#배낭문제(Knapsack Problem)
+배낭에 담을 수 있는 무게의 최대값이 정해져있고, 일정한 가치와 무게가 정해져 있는 짐들을 배낭에 담을때, 가치의 합이 최대가 되도록하는 문제.
+1. 물건을 쪼갤 수 있는 배낭문제(Fraction Knapsack Problem): 가치가 큰 물건부터 담기, Greedy로 해결가능
+2. 물건을 쪼갤 수 없는 배낭문제(0/1 Knapsack Problem): DP로 해결
+
+2차원 DP 테이블을 만들어서 가로에는 가방의 무게를, 세로에는 물건의 Index를 이용하여 푸는 문제이다.
+만약에 넣을 수 있으면 그 무게만큼 덜은 가치와 넣을 수 있는 가치를 더한 것과 기존에 있던 것 중에 큰 값을 선택하면 되고
+아니면 기존에 있던 값을 저장한다.
