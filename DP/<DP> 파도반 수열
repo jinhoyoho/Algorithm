@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+t = int(input()) #테스트 케이스 입력
+for _ in range(t): #t번 반복
+    n = int(input()) #n입력
+    p = [0] * (101) #DP테이블
+    p[1] = 1
+    p[2] = 1
+    p[3] = 1
+    p[4] = 2
+    p[5] = 2
+
+    if n >= 6: #n이 6보다 크면 DP사용 가능
+        for i in range(6, n+1):
+            p[i] = p[i-5] + p[i-1]
+   
+    print(p[n])
+    
+#DP문제는 점화식과 인덱스에 주의하면서 문제를 해결해야 한다.
