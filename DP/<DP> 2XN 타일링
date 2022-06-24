@@ -1,0 +1,12 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #n입력
+dp = [0, 1, 2] + [0] * (n-2) #(n+1)개 dp테이블 만들기
+
+for i in range(3, n+1): #3부터 n까지
+    dp[i] = (dp[i-1] + dp[i-2]) % 10007#i-1은 한가지, i-2도 1가지가 있음
+
+print(dp[n])
+
+#i-1번째와 i-2번째가 각각 한가지씩 있으므로 그냥 더해준다. (피보나치 수열과 비슷해짐)
