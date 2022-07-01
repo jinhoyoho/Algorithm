@@ -1,0 +1,43 @@
+from collections import deque
+
+import sys
+input = sys.stdin.readline
+
+def bfs(i, j, value, new_value):
+    visited = list([False] * m for _ in range(n))
+    visited[i][j] = True #방문완료
+    graph[i][j] = new_value #백신 투여 완료
+    queue = deque()
+    queue.append((i, j))
+    
+    while queue:
+        y, x = queue.popleft()
+        for d in range(4): #상하좌우 탐색
+            nx = x + dx[d] #가로
+            ny = y + dy[d] #세로
+            if -1 < nx < m and -1 < ny < n: #맵을 벗어나지 않고
+                if graph[ny][nx] == value and not visited[ny][nx]: #기존값과 방문하지 않았다면
+                    graph[ny][nx] = new_value #백신 투여
+                    visited[ny][nx] = True #방문처리
+                    queue.append((ny, nx))
+
+n, m = map(int, input().split()) #세로, 가로 입력
+graph = list(list(map(int, input().split())) for _ in range(n))
+new_graph = list(list(map(int, input().split())) for _ in range(n))
+dx = [0, 1, 0, -1]
+dy = [1, 0, -1, 0] #상하좌우
+
+token = 0 #반복문 탈출
+for i in range(n):
+    if token == 1:
+        break
+    for j in range(m):
+        if graph[i][j] != new_graph[i][j] and not token: #서로 다르다면
+            bfs(i, j, graph[i][j], new_graph[i][j])
+            token = 1
+            break
+
+if graph == new_graph:
+    print("YES")
+else:
+    print("NO")
