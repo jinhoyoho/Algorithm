@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+num = input().rstrip() #문자열 입력
+split = num #복사
+
+for i in range(1, 4):
+    start_num = num[0:i] #1~3자리수로 나누기
+    A = start_num
+    while split and split[:len(start_num)] == start_num: #split이 남아있고 다음 탐색할 수가 같다면
+        split = split[len(start_num):] #해당 문자 복사
+        start_num = str(int(start_num) + 1) #1더한 수
+    if not split:
+        break
+        
+    split = num #초기화
+
+print(A, int(start_num) - 1)
+
+#문자열 처리하는거 공부하기..!
