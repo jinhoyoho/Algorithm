@@ -1,0 +1,13 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #상자 개수 입력
+box = list(map(int, input().split())) #박스 순서대로 저장
+dp = [1] * n
+
+for i in range(n):
+    for j in range(i): 
+        if box[i] > box[j]: #비교하는 박스가 비교당하는 박스보다 클 경우
+            dp[i] = max(dp[i], dp[j] + 1) #현재값 or dp값 + 1
+
+print(max(dp))
