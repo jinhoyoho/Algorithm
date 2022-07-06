@@ -1,0 +1,39 @@
+import heapq
+import sys
+input = sys.stdin.readline
+INF = 1e9
+
+n, m, start = map(int, input().split()) #노드, 간선, 목표
+graph = [[] for _ in range(n+1)] #그래프 생성
+distance = [INF] * (n+1) #거리
+
+for _ in range(m):
+    x, y, z = map(int, input().split()) #x에서 y로 가는데 걸리는 시간이 z초
+    graph[x].append((y, z))
+
+def dijkstra(start):
+    q = []
+    distance[start] = 0 
+    heapq.heappush(q, (0, start)) #0초, 시작노드
+    while q:
+        dist, now = heapq.heappop(q)
+        #거리가 길다면
+        if distance[now] < dist:
+            continue
+        for i in graph[now]:
+            cost = dist + i[1]
+            #현재 노드를 거쳐서 다른 노드로 이동하는 거리가 더 짧은 경우
+            if cost < distance[i[0]]:
+                distance[i[0]] = cost
+                heapq.heappush(q, (cost, i[0]))
+
+dijkstra(start)
+count = 0
+max_distance = 0
+print(distance)
+for d in distance:
+    if d != INF:
+        count += 1
+        max_distance = max(max_distance, d)
+
+print(count - 1, max_distance)
