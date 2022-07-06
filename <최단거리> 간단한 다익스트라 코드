@@ -1,0 +1,47 @@
+import sys
+input = sys.stdin.readline
+INF = 1e9
+
+n, m = map(int, input().split()) #노드, 간선 개수
+start = int(input())
+graph = [[] for _ in range(n+1)]
+visited = [False] * (n+1)
+distance = [INF] * (n+1)
+
+for _ in range(m):
+    a, b, c = map(int, input().split()) #a에서 b로 가는데 c만큼 비용이 든다
+    graph[a].append((b, c))
+
+def get_smallest_node():
+    min_value = INF
+    index = 0
+    for i in range(1, n+1):
+        if distance[i] < min_value and not visited[i]: #거리가 최소이고 방문한 적이 없다면
+            min_value = distance[i]
+            index = i
+    return index
+
+def dijkstra(start):
+    distance[start] = 0 #초기화
+    visited[start] = True
+    for j in graph[start]:
+        distance[j[0]] = j[1] #시작노드와 연결되어 있는 거리 입력
+    for i in range(n-1):
+        now = get_smallest_node() #방문한적이 없는 노드 중에서 가장 작은 노드 찾기
+        visited[now] = True #방문처리
+        for j in graph[now]:
+            cost = distance[now] + j[1]
+            if distance[j[0]] > cost:
+                distance[j[0]] = cost
+
+dijkstra(start)
+
+for i in range(1, n+1):
+    if distance[i] == INF:
+        print("INF")
+    else:
+        print(distance[i])
+        
+        
+#시간복잡도가 O(V^2)인 간단한 다익스트라 알고리즘 코드이다.
+매번 선형탐색, 매번 현재노드와 연결된 노드를 탐색하므로 V^2이다.
