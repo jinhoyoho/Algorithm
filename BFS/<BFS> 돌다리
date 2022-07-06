@@ -1,0 +1,24 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+def bfs(start):
+    q = deque() #큐 생성
+    q.append(start) #시작 노드 저장
+    graph[start] = 0
+    while q:
+        node = q.popleft()
+        for new in [node-1, node+1, node-a, node+a, node-b, node+b, node*a, node*b]: #8가지 방법
+            if 0 < new < 100001 and graph[new] == -1: #새로운 돌다리가 범위안에 있고 방문한 적이 없다면
+                graph[new] = graph[node] + 1
+                q.append(new)
+                if new == m: #도착시
+                    return #종료
+
+a, b, n, m = map(int, input().split())
+graph = [-1] * (100001) #돌다리
+bfs(n)
+print(graph[m])
+
+#list를 직접 만들어서 접근할 수도 있다.
+visited를 꼭 사용하지 않고도 방문유무를 체크할 수 있으며 동시에 값 저장까지 가능하다.
