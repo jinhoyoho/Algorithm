@@ -1,0 +1,35 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+a, b = map(int, input().split()) #a:start, b:target
+n, m = map(int, input().split()) #n:node, m:edge
+graph = [[] for _ in range(n+1)] #각 노드에 연결되어있는 그래프
+result = [0] * (n+1) #n+1개의 결과값
+
+for i in range(m): #m개의 간선 저장
+    l, r = map(int, input().split())
+    graph[l].append(r) #그래프 저장
+    graph[r].append(l)
+
+def bfs(start):
+    q = deque()
+    q.append(start)
+    result[start] = 1 #방문 및 저장
+    while q:
+        node = q.popleft()
+        for new in graph[node]:
+            if not result[new]: #방문한 적이 없다면
+                result[new] = result[node] + 1 #방문
+                q.append(new)
+                if new == b:
+                    return #종료
+
+bfs(a)
+
+if result[b]: #결과가 0이 아니라면
+    print(result[b] - 1)
+else:
+    print(-1)
+    
+#돌다리 문제랑 비슷한 유형이다.
