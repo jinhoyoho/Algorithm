@@ -1,0 +1,38 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+def bfs(start):
+    q = deque()
+    q.append(start)
+    visited[start] = True #방문처리
+    graph[start] = 0
+    while q:
+        floor = q.popleft() #현재 층
+        if floor == g: #목표층 도달
+            break
+        up_floor = floor + u #위로
+        down_floor = floor - d #아래로
+        #층 안에 있고 방문한 적이 없다면
+        if 1 <= up_floor <= f and not visited[up_floor]: 
+            visited[up_floor] = True #올라가기
+            graph[up_floor] = graph[floor] + 1
+            q.append(up_floor)
+        #층 안에 있고 방문한 적이 없다면
+        if 1 <= down_floor <= f and not visited[down_floor]:
+            visited[down_floor] = True #내려가기
+            graph[down_floor] = graph[floor] + 1
+            q.append(down_floor)
+    
+#가장 높은 층, 현재 위치, 목표 위치, 위로 u칸, 아래로 d칸
+f, s, g, u, d = map(int, input().split())
+graph = [-1 for _ in range(f+1)] #1~f층 횟수
+visited = [False] * (f+1) #1~f층 방문처리
+
+bfs(s)
+if graph[g] == -1:
+    print("use the stairs")
+else:
+    print(graph[g])
+
+#올라가는 경우, 내려가는 경우로 나눈 후에 가고자 하는 층이 층 안에 있는지, 방문한 적이 있는지를 판별하고 큐 안에 넣기
