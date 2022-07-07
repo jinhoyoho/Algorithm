@@ -1,0 +1,33 @@
+import sys
+import heapq
+input = sys.stdin.readline
+INF = 1e9
+
+n = int(input().rstrip()) #노드 개수
+m = int(input()) #간선 개수
+graph = [[] for _ in range(n+1)] # 1부터 n까지 그래프
+distance = [INF] * (n+1) #거리를 나타낼 리스트
+for _ in range(m): #간선 입력
+    a, b, c = map(int, input().split()) #a에서 b까지 가는데 걸리는 시간 c
+    graph[a].append((b, c)) #노드와 거리 입력
+
+start, target = map(int, input().split()) #출발, 도착 노드 입력
+
+def dijkstart(start):
+    q = list() #큐
+    heapq.heappush(q, (0, start)) #좌표랑 거리 큐에 입력
+    distance[start] = 0 #거리 0
+    while q:
+        dist, now = heapq.heappop(q)
+        if distance[now] < dist: #기존 거리보다 훨씬 더 크다면
+            continue #의미없음 -> 어차피 dist를 더해야 하기 때문
+        for node in graph[now]:
+            cost = dist + node[1] #거리 갱신
+            if cost < distance[node[0]]: #기존 거리보다 크다면
+                distance[node[0]] = cost #기존 값 갱신
+                heapq.heappush(q, (cost, node[0])) #거리랑 노드 push
+
+dijkstart(start)
+print(distance[target])
+
+#전형적인 다익스트라 문제이다.
