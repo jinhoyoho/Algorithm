@@ -1,0 +1,40 @@
+import heapq
+import sys
+input = sys.stdin.readline
+INF = 1e9
+
+n, e = map(int, input().split()) #개수v, 간선e
+start = int(input()) #시작
+graph = [[] for _ in range(n+1)] #1~v까지의 그래프
+distance = [INF] * (n+1) # 0~v까지의 그래프
+
+for _ in range(e): #간선 정보 저장
+    u, v, w = map(int, input().split()) #u에서 v로 가는 w의 가중치
+    graph[u].append((v, w)) #(도착, 거리)저장
+
+def dijkstra(start):
+    q = list() #힙
+    heapq.heappush(q, (0, start)) #(거리, 정점)저장
+    distance[start] = 0
+    while q:
+        dist, now = heapq.heappop(q) #거리, 정점 pop
+        if distance[now] < dist:
+            continue
+        for node in graph[now]:
+            cost = dist + node[1]
+            if cost < distance[node[0]]: #새로구한 거리가 기존 거리보다 짧다면
+                distance[node[0]] = cost
+                heapq.heappush(q, (cost, node[0]))
+
+
+dijkstra(start)
+
+for i in range(1, n+1):
+    if distance[i] == INF:
+        print("INF")
+    else:
+        print(distance[i])
+        
+        
+#변수 이름을 같이 써서 나중에 입력받은 값이 의도하지 않게 해당 변수로 들어가서 해결되지 않았다.
+중복된 변수는 사용하지 않기!
