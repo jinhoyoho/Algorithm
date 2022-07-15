@@ -1,0 +1,13 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #수열개수
+arr = list(map(int, input().split())) #배열
+dp = [arr[i] for i in range(n)] #0부터 n-1까지 DP테이블
+
+for i in range(n): #0부터 n-1까지
+    for j in range(i): #0부터 i-1까지
+        if arr[i] > arr[j]: #i가 더 크다면
+            dp[i] = max(dp[i], dp[j] + arr[i])
+
+print(max(dp))
