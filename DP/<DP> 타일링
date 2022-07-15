@@ -1,0 +1,16 @@
+import sys
+input = sys.stdin.readline
+
+dp = [1, 1, 3] + [0] * 248 #1~250까지의 DP테이블
+
+while True:
+    try:
+        n = int(input())
+        if not dp[n]: #dp가 0이라면
+            for i in range(3, n+1): #3부터 n까지
+                dp[i] = dp[i-1] + dp[i-2] * 2
+    
+        print(dp[n])
+    except:
+        break
+#아무것도 안하는 것도 1가지 방법이다. (0! = 1)
