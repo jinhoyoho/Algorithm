@@ -1,0 +1,15 @@
+import sys
+input = sys.stdin.readline
+n = int(input()) #수열 개수
+cnt = [0] * (10001) #1~n까지 계수정렬을 담을 리스트
+
+for _ in range(n):
+    num = int(input())
+    cnt[num] += 1 #계수 증가
+
+for i in range(10001):
+    if cnt[i]: #0이 아니라면
+        for _ in range(cnt[i]): #i번 반복
+            print(i)
+
+#계수정렬
