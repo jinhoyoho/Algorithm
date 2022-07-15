@@ -1,0 +1,16 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #수열개수
+arr = list(map(int, input().split())) #배열
+dp = [1] * n #0부터 n-1까지 DP테이블
+
+for i in range(n): #0부터 n-1까지
+    for j in range(i): #0부터 i-1까지
+        if arr[i] > arr[j]: #i가 더 크다면
+            dp[i] = max(dp[i], dp[j] + 1)
+
+print(max(dp))
+
+#LIS(Longest Increasing Subsequence)라고 하는 알고리즘이다.
+하나씩 다 비교해서 DP값을 갱신하므로 O(N^2)의 시간이 걸린다.
