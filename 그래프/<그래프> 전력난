@@ -1,0 +1,38 @@
+import sys
+input = sys.stdin.readline
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+while True:
+    m, n = map(int, input().split()) #m개의 집과 n개의 길 
+    if m == 0 and n == 0: #종료
+        break
+    parent = [i for i in range(m+1)] #1부터 m까지 자기 자신으로 초기화
+    edges = [] #길을 담을 리스트
+    result = 0 #결과
+    save = 0
+    for _ in range(n):
+        x, y, z = map(int, input().split())
+        save += z
+        edges.append((z, x, y)) #거리, x, y 순서로 저장
+    edges.sort() #거리를 기준으로 오름차순 정렬
+
+    for edge in edges:
+        cost, x, y = edge
+        if find_parent(parent, x) != find_parent(parent, y):
+            union_parent(parent, x, y)
+            result += cost
+
+    print(save - result)
+    
