@@ -1,0 +1,40 @@
+import sys
+input = sys.stdin.readline
+
+#부모 찾기
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+#부모 합치기
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    #작은 수를 부모로 만들기
+    if a > b:
+        parent[a] = b
+    else:
+        parent[b] = a
+
+v = int(input())
+e = int(input())
+edges = [] #간선을 담을 리스트
+parent = [0] * (v+1) #해당 번호의 부모 노드
+result = 0 #결과
+#간선 입력
+for _ in range(e):
+    a, b, c = map(int, input().split()) #a와 b 연결, 비용 c만큼 소모
+    edges.append((c, a, b)) #(비용, a, b) 입력
+edges.sort() #간선 오름차순 정렬
+
+for i in range(1, v+1):
+    parent[i] = i #부모 자기 자신으로 초기화
+
+for edge in edges:
+    cost, a, b = edge
+    if find_parent(parent, a) != find_parent(parent, b): #부모가 같지 않다면
+        union_parent(parent, a, b) #부모 합치기
+        result += cost #결과 저장
+
+print(result)
