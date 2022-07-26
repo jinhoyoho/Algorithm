@@ -1,0 +1,13 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #카드 개수
+p = [0] + list(map(int, input().split())) #1~n까지 가격
+dp = [0, p[0]] + [0] * (n-1) #1~n개의 dp테이블 생성
+
+for i in range(1, n+1): #1부터 n까지
+    for j in range(1, i+1): #1부터 i까지
+        value = dp[i-j] + p[j]
+        dp[i] = max(dp[i], value)
+
+print(dp[n])
