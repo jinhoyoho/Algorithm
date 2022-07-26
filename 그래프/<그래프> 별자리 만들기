@@ -1,0 +1,39 @@
+import sys
+import math
+input = sys.stdin.readline
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b:
+        parent[b] = a
+    else:
+        parent[a] = b
+
+n = int(input()) #별의 개수 입력
+parent = [i for i in range(n+1)] #부모 자기 자신으로 초기화
+stars = [] #별의 좌표를 담을 리스트
+edges = [] #간선의 정보를 담을 리스트
+result = 0
+for _ in range(n):
+    stars.append(tuple(map(float, input().split())))
+
+for i in range(n-1):
+    for j in range(i+1, n):
+        edges.append((math.sqrt((stars[i][0] - stars[j][0])**2 + (stars[i][1] - stars[j][1]) ** 2), i, j)) #거리, i번째 별, j번째 별 저장
+edges.sort() #오름차순 정렬
+
+for edge in edges:
+    cost, x, y = edge
+    if find_parent(parent, x) != find_parent(parent, y): #다를 경우
+        union_parent(parent, x, y)
+        result += cost
+
+print(round(result, 2))
+
+#별의 좌표를 따로 저장한다. 별의 좌표가 아닌 따로 저장한 별의 거리와 그것들의 좌표의 순서를 edge에 저장한다.
