@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #n개의 배열, m이 되게 하라
+arr = list(map(int, input().split()))
+
+sum = 0 #중간 합
+end = 0 #마지막 포인터
+result = 0 #결과
+
+for start in range(n):
+    #합이 m보다 작고 end가 n을 넘어가지 않는 경우    
+    while sum < m and end < n:
+        sum += arr[end]
+        end += 1
+    if sum == m:
+        result += 1
+    sum -= arr[start]
+    
+print(result)
