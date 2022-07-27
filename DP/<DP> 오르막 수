@@ -1,0 +1,14 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #자리수 입력
+mod = 10007 #나누는 수
+dp = [[0] * 10 for _ in range(n+1)] #1~n개의 자리수 dp테이블 생성
+for i in range(10):
+    dp[1][i] = 1 #첫째자리 초기화
+
+for i in range(2, n+1): #1부터 n까지 자리수
+    for j in range(10): #0부터 10까지 수
+        dp[i][j] = sum(dp[i-1][j:])
+
+print(sum(dp[n]) % mod)
