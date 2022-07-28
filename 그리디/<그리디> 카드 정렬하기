@@ -1,0 +1,23 @@
+import heapq #우선순위 큐
+
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+q = list() #우선순위 큐로 만들 리스트
+
+for _ in range(n):
+    heapq.heappush(q, int(input())) #값 우선순위 큐에 저장
+
+result = 0
+
+while len(q) > 1: #우선순위 큐에 남은 값이 1보다 커야지만 실행
+    a = heapq.heappop(q) #하나 빼기
+    b = heapq.heappop(q) #하나 빼기
+    new = a + b
+    result += new
+    heapq.heappush(q, new) #새로운 값 저장
+
+print(result)
+
+#우선순위 큐를 이용하면 되는 쉬운 문제이다.
