@@ -1,0 +1,24 @@
+import sys
+input = sys.stdin.readline
+
+s = list(input().rstrip()) #s입력
+t = list(input().rstrip()) #t입력
+
+token = 0
+while t: #t가 빌때까지
+    if t[-1] == 'A': #맨 끝이 A면
+        t.pop() #t삭제
+    elif t[-1] == 'B': #맨 끝이 B면
+        t.pop() #t삭제
+        t.reverse() #뒤집기
+
+    if t == s: #같다면
+        token = 1
+        break
+
+if token:
+    print(1)
+else:
+    print(0)
+    
+#역으로 생각하기
