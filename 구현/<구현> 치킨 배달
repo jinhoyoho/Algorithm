@@ -1,0 +1,29 @@
+from itertools import combinations
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #NXN, m개의 치킨집
+graph = list(list(map(int, input().split())) for _ in range(n)) #맵 정
+result = 987654321
+chicken = [] #치킨집 좌표
+house = [] #집 좌표
+
+for i in range(n):
+    for j in range(n):
+        if graph[i][j] == 1: #집인 경우
+            house.append((i, j)) #집 좌표 입력
+        elif graph[i][j] == 2: #치킨 집인 경우
+            chicken.append((i, j)) #치킨집 좌표 입력
+
+for store in combinations(chicken, m): #치킨 좌표중에 m개의 치킨집 선택
+    tmp = 0
+    for a, b in house: #집 좌표
+        distance = 987654321 #집마다 치킨 거리
+        for i in range(m): 
+            distance = min(distance, abs(store[i][0] - a) + abs(store[i][1] - b)) #집을 기준으로 가장 작은 치킨거리 갱신
+        tmp += distance #구한 도시의 치킨 거리를 더하기
+    result = min(result, tmp) #가장 작은 도시의 치킨 거리
+
+print(result)
+
+#조합을 이용해서 집을 기준으로 치킨집 하나씩 거리 측정하여 도시의 치킨 거리 구하기.
