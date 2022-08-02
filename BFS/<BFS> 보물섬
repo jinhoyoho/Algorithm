@@ -1,0 +1,42 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #세로, 가로 입력
+graph = list(list(input().rstrip()) for _ in range(n))
+q = deque() #좌표를 담을 큐
+result = 0 #결과
+
+dx = [0, 1, -1, 0]
+dy = [1, 0, 0, -1]
+
+def bfs(i, j):
+    cmp_list = [[0] * m for _ in range(n)] #숫자로 변환한 그래프
+    visited = [[False] * m for _ in range(n)] #방문기록
+    visited[i][j] = True #시작 좌표 방문처리
+    while q:
+        y, x = q.popleft()
+        for i in range(4):
+            ny = y + dy[i]
+            nx = x + dx[i] #새로운 좌표
+            #새로운 좌표가 범위 안에 있고 방문기록이 없으며 새롭게 갈 좌표가 육지인경우
+            if 0 <= nx < m and 0 <= ny < n and not visited[ny][nx] and graph[ny][nx] == 'L':
+                visited[ny][nx] = True #방문처리
+                cmp_list[ny][nx] = cmp_list[y][x] + 1 #1증가
+                q.append((ny, nx)) #새로운 좌표 대입
+    return max(map(max, cmp_list))
+
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 'L': #육지인경우 bfs 실행
+            q.append((i, j))
+            value = bfs(i, j)
+            result = max(result, value) #가장 큰 값 대입
+
+print(result)
+
+
+#문자열은 list에 담으면 각 글자로 쪼개진다.
+#2차원 리스트에서 max함수를 사용하면 첫번째 원소중에서 큰 값이 나오게 된다.
+#따라서 map함수를 이용해서 max(map(max, 2차원 배열))로 작성해야 2차원 배열 중에서 가장 큰 값이 나오게 된다.
+#map함수를 더 자세히 공부해야겠다.
