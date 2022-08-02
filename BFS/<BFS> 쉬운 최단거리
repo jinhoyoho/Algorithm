@@ -1,0 +1,39 @@
+import sys
+from collections import deque
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #세로, 가로 입력
+graph = list(list(map(int, input().split())) for _ in range(n)) #NXM 지도 입력
+result = [[-1] * m for _ in range(n)]
+dx = [-1, 1, 0, 0]
+dy = [0, 0, 1, -1]
+
+visited = [[False] * m for _ in range(n)] #방문 여부
+
+def bfs(y, x):
+    graph[y][x] = 0 #시작
+    result[y][x] = 0
+    visited[y][x] = True
+    q = deque()
+    q.append((y, x)) #(세로, 가로)입력
+    while q:
+        y, x = q.popleft()
+        for i in range(4):
+            ny = y + dy[i]
+            nx = x + dx[i]
+            if 0 <= nx < m and 0 <= ny < n and graph[ny][nx] == 1 and visited[ny][nx] == False:
+                result[ny][nx] = result[y][x] + 1 #증가
+                visited[ny][nx] = True
+                q.append((ny, nx))
+
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 2: #목표라면
+            bfs(i, j)
+        elif graph[i][j] == 0: #갈수없다면
+            result[i][j] = 0 #얘도 갈 수 없음
+
+for i in range(n):
+    for j in range(m):
+        print(result[i][j], end = ' ')
+    print()
