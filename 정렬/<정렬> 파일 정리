@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+folder = {} #집합
+
+for _ in range(n):
+    file = str(input().rstrip()) #하나 입력
+    file_name = file.split('.')[1] #.을 기준으로 분리하고 두번째 인자 저장
+    if file_name not in folder:
+        folder[file_name] = 1
+    else:
+        folder[file_name] += 1
+
+file_name = sorted(list(folder.keys())) #이름만 저장후 정렬
+
+for name in file_name:
+    print(name, folder[name])
+    
+#딕셔너리 응용
