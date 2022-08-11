@@ -1,0 +1,40 @@
+import heapq
+import sys
+input = sys.stdin.readline
+INF = 987654321
+
+n, e = map(int, input().split()) #정점과 간선 입력
+graph = [[] for _ in range(n+1)] #1부터 n까지 정점
+
+for _ in range(e):
+    a, b, c = map(int, input().split()) #a <-> b 비용 c
+    graph[a].append((b, c))
+    graph[b].append((a, c)) #(정점, 비용)
+
+v1, v2 = map(int, input().split()) #반드시 거쳐야하는 정점 v1, v2
+
+def dijkstra(start, end):
+    distance = [INF] * (n+1) #거리 최리
+    q = []
+    distance[start] = 0
+    heapq.heappush(q, (start, 0)) #(정점, 비용)
+    while q:
+        now, dist = heapq.heappop(q)
+        if distance[now] < dist:
+            continue
+        for i in graph[now]:
+            cost = i[1] + dist
+            if distance[i[0]] > cost:
+                distance[i[0]] = cost
+                heapq.heappush(q, (i[0], cost))
+    return distance[end]
+
+result = min(dijkstra(1, v1) + dijkstra(v1, v2) + dijkstra(v2, n), dijkstra(1, v2) + dijkstra(v2, v1) + dijkstra(v1, n))
+
+if result >= INF:
+    print(-1)
+else:
+    print(result)
+    
+#다익스트라 시작과 도착 구간을 쪼개서 푸는 문제
+#맵이 없을 경우를 정확하게 표현해주기 (>=)
