@@ -1,0 +1,44 @@
+##########
+크루스칼 알고리즘
+##########
+
+import sys
+input = sys.stdin.readline
+
+def find_parent(parent, x):
+    if parent[x] != x: #자기 자신이 아닐 때
+        parent[x] = find_parent(parent, parent[x])
+    return parent[x]
+
+def union_parent(parent, a, b): #a와 b 부모 합치기
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+
+    if a < b: #a가 b보다 작다면
+        parent[b] = a #a를 부모로
+    else:
+        parent[a] = b #b를 부모로
+
+n = int(input()) #행성 개수 입력
+parent = [0] * (n+1) #부모
+edges = [] #거리 저장
+result = 0 #결과 저장
+
+for i in range(1, n+1):
+    parent[i] = i #부모를 자기 자신으로 초기화
+
+for i in range(1, n+1):
+    distance = list(map(int, input().split())) #거리 저장
+    for j in range(0, n): #0부터 n-1까지 -> distance 참조
+        if distance[j]: #거리가 0이 아니면
+            edges.append((distance[j], i, j+1)) #i에서 j+1까지 거리 distance[j]
+
+edges.sort() #거리 오름차순 정렬
+
+for edge in edges:
+    cost, a, b = edge #비용, a에서 b까지
+    if find_parent(parent, a) != find_parent(parent, b):
+        union_parent(parent, a, b) #부모 합치기 (거리 연결)
+        result += cost #비용 더하기
+
+print(result)
