@@ -36,5 +36,4 @@ while q:
                 result[now] = cnt
                 q.append(now)
 
-for i in range(1, n+1):
-    print(result[i], end = ' ')
+print(*result[1:]) #1번부터 list를 Unpacking하여 출력한다는 뜻
