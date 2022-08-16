@@ -1,0 +1,40 @@
+##########
+위상정렬 알고리즘 사용
+##########
+
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #노드, 간선 개수 입력
+graph = [[] for _ in range(n+1)] #1부터 n까지 노드
+indegree = [0] * (n+1) #1번부터 n까지 진입차수
+result = [0] * (n+1) #1번부터 n까지 몇학기에 이수 가능한지 결과
+cnt = 1 #결과 개수
+q = deque() #큐
+
+for _ in range(m):
+    a, b = map(int, input().split()) #a에서 b로 이동
+    graph[a].append(b)
+    indegree[b] += 1
+
+for i in range(1, n+1):
+    if indegree[i] == 0:
+        result[i] = cnt
+        q.append(i)
+
+while q:
+    cnt += 1 #다음 학기에 듣기
+    node_list = deque() #q를 복사할 큐
+    while q:
+        node_list.append(q.popleft()) #복사
+
+    for node in node_list:
+        for now in graph[node]:
+            indegree[now] -= 1
+            if indegree[now] == 0:
+                result[now] = cnt
+                q.append(now)
+
+for i in range(1, n+1):
+    print(result[i], end = ' ')
