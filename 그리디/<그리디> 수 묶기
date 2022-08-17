@@ -1,0 +1,45 @@
+import sys
+input = sys.stdin.readline
+INF = 9876543210
+
+n = int(input())
+positive = []
+negative = []
+for _ in range(n):
+    num = int(input())
+    if num > 0: #양수
+        positive.append(num)
+    else:
+        negative.append(num)
+positive.sort(reverse = True) #내림차순 정렬
+negative.sort() #오름차순 정렬
+prev = INF
+result = 0
+
+for cur in positive: #양수만 순서대로 하나씩 꺼내기
+    if prev == INF:
+        prev = cur #현재 저장
+    elif 1 < cur: #1보다 큰 경우
+        result += prev * cur #곱하기
+        prev = INF
+    elif cur <= 1: #1보다 작거나 같은 경우
+        result += prev
+        prev = cur #더하기만
+
+if prev != INF:
+    result += prev
+    prev = INF
+
+for cur in negative: #양수만 순서대로 하나씩 꺼내기
+    if prev == INF:
+        prev = cur #현재 저장
+    else:
+        result += prev * cur
+        prev = INF
+        
+if prev == INF:
+    print(result)
+else:
+    print(result + prev)
+    
+#양수일때 음수일때 정렬 기준을 달리해서 풀어야한다. 또, 양수일때는 1보다 큰지, 1보다 작은지 구분해줘야 한다.
