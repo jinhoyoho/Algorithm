@@ -1,0 +1,14 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+num = list(map(int, input().split()))
+dp = [1] * n #DP테이블
+
+for i in range(n-1):
+    for j in range(i+1, n):
+        latest = num[i]
+        if num[j] < latest:
+            latest = num[j]
+            dp[j] = max(dp[j], dp[i] + 1)
+print(max(dp))
