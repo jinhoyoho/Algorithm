@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #줄 개수
+num = [[] for _ in range(n+1)] #숫자 삼각형
+dp = [[] for _ in range(n+1)] #DP테이블
+
+for i in range(1, n+1):
+    num[i] = list(map(int, input().split())) #삼각형 수 저장
+    dp[i] = num[i][:]
+
+
+for i in range(1, n): #1부터 n-1까지
+    for j in range(len(num[i])): #0부터 n-1까지 줄 수 있는 수
+        dp[i+1][j] = max(dp[i+1][j], dp[i][j] + num[i+1][j]) #왼쪽
+        dp[i+1][j+1] = max(dp[i+1][j+1], dp[i][j] + num[i+1][j+1]) #오른쪽
+
+print(max(dp[n]))
