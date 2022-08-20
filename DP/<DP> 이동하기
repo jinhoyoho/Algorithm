@@ -1,0 +1,26 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #N*M 입력
+graph = [[] for _ in range(n)]
+
+for i in range(n):
+    graph[i] = list(map(int, input().split()))
+
+dp = [[0] * m for _ in range(n)]
+
+for i in range(n):
+    for j in range(m):
+        if i == 0: #첫 번째 줄 일때
+            if j == 0: #시작 위치
+                dp[0][0] = graph[0][0] #복사
+            else:
+                dp[i][j] = dp[i][j-1] + graph[i][j]
+        elif j == 0: #첫 번째 수 일때
+            dp[i][j] = dp[i-1][j] + graph[i][j]
+        else:
+            dp[i][j] = max(dp[i-1][j], dp[i][j-1]) + graph[i][j]
+
+print(dp[n-1][m-1])
+
+#대각선 이동이 있긴 하지만 의미없는 이동이다.
