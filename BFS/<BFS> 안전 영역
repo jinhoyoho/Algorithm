@@ -1,0 +1,54 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+def bfs(x, y):
+    q = deque()
+    q.append((x, y))
+    safety_sector[x][y] = 1
+
+    while q:
+        x, y = q.popleft()
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if nx <= -1 or nx >= n or ny <= -1 or ny >= n: #범위 밖이면
+                continue
+            if safety_sector[nx][ny] == 0:
+                safety_sector[nx][ny] = 1 #방문처리
+                q.append((nx, ny))
+    
+    return True
+                    
+n = int(input()) #N*N
+graph = [[] * n for _ in range(n)] #N*N 그래프 생성
+max_value = 0 #최댓값
+dx = [-1, 1, 0, 0]
+dy = [0, 0, 1, -1]
+
+for i in range(n):
+    num = list(map(int, input().split())) #수 리스트 저장
+    max_value = max(max_value, max(num))
+    graph[i] = num #저장
+
+result = 0
+
+for rain in range(max_value + 1): #비가 0부터 max_value까지 온다면
+    safety_sector = [[0] * n for _ in range(n)]
+    count = 0
+    for i in range(n):
+        for j in range(n):
+            if graph[i][j] <= rain: #비가 더 많이 오면
+                safety_sector[i][j] = 1 #잠김
+    
+    for i in range(n):
+        for j in range(n):
+            if safety_sector[i][j] == 0: #안전하다면
+                bfs(i,j)
+                count += 1
+    
+    result = max(result, count)
+        
+print(result)
+
+#방문기록을 나타내는 visited 변수는 필요없다.
