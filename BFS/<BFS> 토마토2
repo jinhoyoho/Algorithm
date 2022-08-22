@@ -1,0 +1,47 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+def bfs(q):
+    while q:
+        z, y, x = q.popleft()
+        for i in range(6):
+            nz = z + dz[i]
+            ny = y + dy[i]
+            nx = x + dx[i] #새로운 좌표 입력
+            if 0 <= nz < h and 0 <= ny < n and 0 <= nx < m:
+                if graph[nz][ny][nx] == 0: #익지않은 토마토 라면
+                    graph[nz][ny][nx] = graph[z][y][x] + 1
+                    q.append((nz, ny, nx))
+
+m, n, h = map(int, input().split()) 
+graph = [ [ []for _ in range(n)] for _ in range(h)] #m*n*h graph 생성
+q = deque() #좌표를 담을 큐
+
+for i in range(h):
+    for j in range(n):
+        graph[i][j] = list(map(int, input().split()))
+        
+dz = [-1, 1, 0, 0, 0, 0]
+dy = [0, 0, -1, 1, 0, 0]
+dx = [0, 0, 0, 0, 1, -1]
+
+for i in range(h):
+    for j in range(n):
+        for k in range(m):
+            if graph[i][j][k] == 1:
+                q.append((i,j,k))
+bfs(q)
+
+result = 0
+for i in range(h):
+    for j in range(n):
+        for k in range(m):
+            if graph[i][j][k] == 0:
+                print(-1)
+                exit()
+            result = max(result, graph[i][j][k])
+
+print(result - 1)
+
+#2차원 그래프를 3차원 그래프로 확장한 BFS문제이다.
