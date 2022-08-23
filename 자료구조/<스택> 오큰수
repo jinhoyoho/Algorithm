@@ -1,0 +1,21 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+nums = list(map(int, input().split()))
+stack = list() #index를 담을 리스트
+result = [-1] * n #-1 n개 생성
+
+stack.append(0) #시작
+for i in range(1, n): #1부터 n-1까지
+    #스택이 비어있지 않고 스택에 가장 최근에 넣은 수가 i번째 수보다 작은 경우
+    while stack and nums[stack[-1]] < nums[i]:
+        result[stack.pop()] = nums[i] #오큰수 대입
+    stack.append(i)
+
+print(*result)
+
+
+#답을 봐도 이해가 안돼서 열심히 고민한 문제이다.
+index만 따로 넣는다는 것, 그리고 그 index를 이용해서 수를 비교하는 것.
+많은 문제를 풀면서 연습해야 할 것 같다.
