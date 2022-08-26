@@ -1,0 +1,43 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+graph = [[] for _ in range(n)] #graph생성
+visited = [[False] * m for _ in range(n)]
+r, c, d = map(int, input().split()) #현재위치(r,c) 방향:d
+for i in range(n): #맵 정보 저장
+    graph[i] = list(map(int, input().split()))
+
+dr = [-1, 0, 1, 0]
+dc = [0, 1, 0, -1] #북, 동, 남, 서 방향
+
+result = 1 #결과 저장
+visited[r][c] = True #시작위치 방문
+count = 0 #방향 전환 횟수
+
+def turn_direction(d):
+    d -= 1
+    if d < 0: #방향 초과
+        d = 3  #초기화
+    return d
+
+while True:
+    for _ in range(4):
+        d = turn_direction(d)
+        count += 1
+        nr, nc = r + dr[d], c + dc[d] #방향 전환한 새로운 좌표
+        if not visited[nr][nc] and graph[nr][nc] == 0: #간 적이 없고 청소해야 한다면
+            result += 1 #청소
+            visited[nr][nc] = True #방문
+            r, c = nr, nc #이동
+            count = 0 #방향전환 초기화
+            break
+    if count == 4: #모두 청소 or 벽
+        nr, nc = r - dr[d], c - dc[d]
+        if graph[nr][nc] == 1: #후진시 벽이라면
+            break
+        else:
+            r, c = nr, nc #후진
+            count = 0 #방향 전환 초기화
+
+print(result)
