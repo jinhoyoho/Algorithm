@@ -1,0 +1,54 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #n * m (세로 * 가로)
+graph = list(list(map(int, input().split())) for _ in range(n)) #그래프 입력
+visited = [[False] * m for _ in range(n)] #방문 기록
+result = 0 #결과
+
+#상 우 하 좌
+di = [-1, 0, 1, 0]
+dj = [0, 1, 0, -1]
+
+def dfs(i, j, count, total): #나머지 블록 계산
+    global result
+    if count == 4: #4번 모두 진행했을 때
+        result = max(result, total)
+        return
+    else:
+        for k in range(4): #4방향 이동
+            ni = i + di[k]
+            nj = j + dj[k] #새로운 좌표
+            if 0 <= ni < n and 0 <= nj < m and not visited[ni][nj]:
+                visited[ni][nj] = True #방문처리
+                dfs(ni, nj, count + 1, total + graph[ni][nj]) #dfs진행
+                visited[ni][nj] = False #초기화
+
+def h(i, j): #볼록한 블록 계산
+    global result
+    for p in range(4):
+        tmp = graph[i][j] #시작부분
+        
+        for k in range(3):
+            t = (p+k) % 4 #상우하좌
+            #t => (0, 1, 2), (1, 2, 3), (2, 3, 0), (3, 1, 0)
+            ni = i + di[t]
+            nj = j + dj[t] #새로운 좌표 입력
+            if not (0 <= ni < n and 0 <= nj < m):
+                tmp = 0 #범위를 벗어난 경우 초기화
+                break
+            tmp += graph[ni][nj]
+        result = max(result, tmp)
+        
+for i in range(n):
+    for j in range(m):
+        visited[i][j] = True
+        dfs(i, j, 1, graph[i][j])
+        visited[i][j] = False
+        h(i, j) #볼록한 블럭 계산
+
+print(result)
+
+#한 번 사용한 변수는 절대 다시 사용하지 않기
+#구현보단 DFS에 가까운 문제가 아닌가 싶다.
+#한 좌표로 부터 네 곳을 이동하면 블록을 만들 수 있다는 것을 알면 DFS로 쉽게 풀 수 있는 문제이다.
