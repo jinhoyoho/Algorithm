@@ -1,0 +1,21 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #색종이 장 수 입력
+
+papers = list(list(sorted(map(int, input().split()))) for _ in range(n)) #n장의 색종이 입력
+
+papers.sort(key = lambda x : (x[0], x[1]))
+
+dp = [1 for _ in range(n)] #i번째 색종이에 올라갈 수 있는 색종이
+
+for i in range(1, n): #1부터 n-1까지
+    for j in range(i): #0부터 i까지
+        if papers[i][1] >= papers[j][1]:
+            dp[i] = max(dp[i], dp[j]+1)
+
+print(max(dp))
+
+#dp와 정렬을 합친 문제이다.
+좌표 순서가 상관 없으므로 입력받는 (x,y)에 대해서도 정렬해주고
+y에 대해서 먼저 오름차순 정렬을 해준다음 x에 대해서 오름차순 정렬을 실행해준다.
