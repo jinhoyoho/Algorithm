@@ -1,0 +1,19 @@
+import sys
+import math
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #n부터 m까지 소수구하기
+
+prime_number = [True] * (1000001) #m+1개의 소수
+prime_number[1] = False #1은 소수가 아님
+
+for i in range(2, int(math.sqrt(m)) + 1): #n부터 m까지
+    if prime_number[i] == True: #소수인경우
+        j = 2 #증가하는 수
+        while i * j <= m: #구하는 수가 m 이하일때
+            prime_number[i*j] = False #배수 지우기
+            j += 1
+
+for i in range(n, m+1):
+    if prime_number[i]:
+        print(i)
