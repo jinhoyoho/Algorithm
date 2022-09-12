@@ -1,0 +1,13 @@
+n = 5 #데이터의 개수
+data = [10, 20, 30, 40, 50] #데이터
+
+sum_value = 0 #데이터 누적합
+prefix_sum = [0] #데이터 누적합을 저장할 리스트
+
+for value in data:
+    sum_value += value #구간에 따른 데이터를 하나씩 누적
+    prefix_sum.append(sum_value) #누적한 데이터합 추가 저장하기
+
+left = k
+right = L
+result = prefix_sum[L] - prefix_sum[k-1] #구간 [k, L]의 합 구하기
