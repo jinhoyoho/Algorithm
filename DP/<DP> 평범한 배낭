@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+n, k = map(int, input().split()) #n개의 물건, k개의 제한
+
+dp = [[0 for _ in range(k+1)] for _ in range(n+1)] #DP
+bags = [[0, 0]] + list(list(map(int, input().split())) for _ in range(n)) #n개 물건 (무게, 가치) 담기
+
+for i in range(1, n+1):
+    for j in range(1, k+1):
+        weight = bags[i][0] #현재 무게
+        value = bags[i][1] #현재 가치
+        if j < weight:
+            dp[i][j] = dp[i-1][j] #weight보다 작으면 그냥 가져오기
+        else:
+            dp[i][j] = max(value + dp[i-1][j-weight], dp[i-1][j])
+
+print(dp[n][k])
+
+#배낭(Knapsack)문제
