@@ -1,0 +1,33 @@
+from itertools import permutations
+import sys
+input = sys.stdin.readline
+
+k = int(input()) #괄호 개수
+visited = [False] * 10 #방문 기록
+
+IS = list(map(str, input().split())) #괄호 입력
+
+result = list() #빈 리스트 생성
+
+for num in permutations([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], k+1): #10Pk+1의 순열
+    flag = True
+    for i in range(len(IS)): #괄호 개수만큼
+        if IS[i] == '<':
+            if num[i] < num[i+1]:
+                continue
+            else:
+                flag = False #거짓
+                break
+        else: #IS[i] == '>'
+            if num[i] > num[i+1]:
+                continue
+            else:
+                flag = False
+                break
+    if flag: #flag = True라면
+        result.append(num)
+
+print(''.join(map(str, list(max(result))))) #최댓값 문자로 출력
+print(''.join(map(str, list(min(result))))) #최솟값 문자로 출력
+
+#순열을 이용한 풀이
