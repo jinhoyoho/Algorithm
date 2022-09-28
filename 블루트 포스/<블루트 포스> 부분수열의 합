@@ -1,0 +1,44 @@
+from itertools import combinations
+import sys
+input = sys.stdin.readline
+
+n, s = map(int, input().split()) #크기 n개의 수열, 원하는 목표
+nums = list(map(int, input().split())) #수열 입력
+cnt = 0 #s와 같은 개수(정답)
+
+for i in range(1, n+1):
+    for com in combinations(nums, i): #조합
+        result = sum(com)
+        if s == result:
+            cnt += 1
+
+print(cnt)
+#수열들의 모든 조합을 구해서 답을 찾는 풀이
+
+#백트래킹 알고리즘으로 푼 코드
+import sys
+input = sys.stdin.readline
+
+n, s = map(int, input().split()) #개수(n)와 원하는 값(s) 입력
+nums = list(map(int, input().split())) #수열
+cnt = 0 #개수(정답)
+
+def subset_sum(idx, sub_sum): #
+    global cnt #정답
+
+    if idx >= n: #인덱스가 개수보다 같거나 크다면
+        return #참조할 수 없으므로 종료 (백트래킹, 가지치기)
+
+    sub_sum += nums[idx] #현재 인덱스에 있는 수열 값 sub_sum에 더하기
+
+    if sub_sum == s: #답을 찾았다면
+        cnt += 1 #개수 증가
+    
+    # 현재 nums[idx]를 선택한 경우의 가지
+    subset_sum(idx+1, sub_sum)
+
+    # 현재 nums[idx]를 선택하지 않은 경우의 가지
+    subset_sum(idx+1, sub_sum - nums[idx]) #무조건 더했으므로 빼주기
+
+subset_sum(0, 0)
+print(cnt)
