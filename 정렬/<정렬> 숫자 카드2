@@ -1,0 +1,13 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+result = [0] * 20000001
+
+for num in list(map(int, input().split())):
+    result[num] += 1
+
+m = int(input())
+
+for num in list(map(int, input().split())):
+    print(result[num], end =' ')
