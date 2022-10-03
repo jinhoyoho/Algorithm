@@ -1,0 +1,41 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+def bfs(i, j):
+    area = 1 #넓이 1
+    visited[i][j] = True #방문처리
+    q = deque() #큐
+    q.append((i, j)) #좌표 저장
+    while q: #큐가 빌때 까지
+        y, x = q.popleft() #좌표
+        for i in range(4): #상하좌우 탐색
+            ny = y + dy[i]
+            nx = x + dx[i]
+            if 0 <= ny < n and 0 <= nx < m: #범위 안에 있다면
+                if not visited[ny][nx] and graph[ny][nx] == 1: #방문하고 그림이 그려져 있다면
+                    area += 1 #그림 넓이 증가
+                    visited[ny][nx] = True #방문
+                    q.append((ny, nx)) #새로운 좌표 저장
+    return area
+
+n, m = map(int, input().split()) #세로, 가로
+graph = list() #저장할 지도
+for _ in range(n): #6줄 입력
+    graph.append(list(map(int, input().split()))) #맵 저장
+visited = [[False] * m for _ in range(n)] #방문 기록
+
+dy = [-1, 1, 0, 0]
+dx = [0, 0, -1, 1] #상하좌우
+
+count = 0 #그림 개수
+result_area = 0 #최대 그림 넓이
+
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 1 and not visited[i][j]: #그림이 그려져 있고 방문하지 않았다면
+            result_area = max(result_area, bfs(i, j)) #bfs실행
+            count += 1
+
+print(count)
+print(result_area)
