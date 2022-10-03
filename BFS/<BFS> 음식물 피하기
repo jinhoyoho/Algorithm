@@ -1,0 +1,41 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+def bfs(i, j):
+    visited[i][j] = True #방문처리
+    q = deque() #큐 생성
+    cnt = 1 #방문횟수
+    q.append((i, j)) #좌표 입력
+    while q: #큐가 빌때까지
+        y, x = q.popleft() 
+        for i in range(4): #상하좌우 탐색
+            ny = y + dy[i]
+            nx = x + dx[i]
+            if 0 <= ny < n and 0 <= nx < m and not visited[ny][nx] and graph[ny][nx] == 1: #좌표 안에 있고 방문한 적이 없고 해당 좌표에 음식물이 있다면
+                visited[ny][nx] = True #방문처리
+                graph[ny][nx] = 2 #음식물 처리
+                cnt += 1 #방문 횟수 증가
+                q.append((ny, nx)) #좌표 저장
+    return cnt #방문 횟수 반환
+
+n, m, k = map(int, input().split()) #세로, 가로, 음식물 개수
+graph = [[0] * m for _ in range(n)] #N*M지도
+visited = [[False] * m for _ in range(n)] #방문처리
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, 1, -1]
+
+for _ in range(k):
+    y, x = map(int, input().split()) #음식물 있는 좌표
+    graph[y-1][x-1] = 1 #음식물 있으면 1
+
+result = 0 #결과
+
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 1: #음식물이 있다면
+            count = bfs(i, j) #방문한 횟수 출력
+            result = max(count, result) #결과 갱신
+            
+print(result) #결과
