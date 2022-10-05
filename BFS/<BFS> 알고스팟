@@ -1,0 +1,27 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+m, n = map(int, input().split()) #가로, 세로 입력 
+graph = list(list(map(str, input())) for _ in range(n)) #맵 정보 입력
+dist = [[-1] * m for _ in range(n)] #가중치
+dx = [-1, 1, 0, 0]
+dy = [0, 0, 1, -1] #상하좌우 탐색
+
+q = deque() #덱
+q.append((0, 0)) #시작 좌표 입력
+dist[0][0] = 0 #시작은 0
+while q: #큐가 빌 때까지
+    x, y = q.popleft() #제일 왼쪽 좌표 반환
+    for i in range(4): #상하좌우 탐색
+        nx = x + dx[i]
+        ny = y + dy[i] #새로운 좌표
+        if 0 <= nx < n and 0 <= ny < m and dist[nx][ny] == -1: #좌표가 안에 있고 탐색하지 않았다면
+            if graph[nx][ny] == '0': #빈 방이라면
+                dist[nx][ny] = dist[x][y] #벽 부수기x
+                q.appendleft((nx, ny)) #그 방으로 이동
+            elif graph[nx][ny] == '1': #벽이라면
+                dist[nx][ny] = dist[x][y] + 1 #벽 부수기o
+                q.append((nx, ny)) #맨 마지막에 이동
+
+print(dist[n-1][m-1])
