@@ -1,0 +1,39 @@
+import heapq
+import sys
+input = sys.stdin.readline
+INF = 987654321
+
+def dijkstra():
+    q = list() #힙을 저장할 리스트    
+    distance[0][0] = 0 #시작 좌표 가중치 갱신
+    heapq.heappush(q, (graph[0][0], 0, 0)) #(cost값 x값 y값)
+    while q:
+        cost, x, y = heapq.heappop(q) 
+        if x == n-1 and y == n-1:
+            print(f"Problem {cnt}: {distance[x][y]}") #f-string
+            break
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i] #상하좌우 탐색
+            if 0 <= nx < n and 0 <= ny < n: #좌표안에 있다면
+                new_cost = cost + graph[nx][ny] #새로운 cost값 구하기
+                if new_cost < distance[nx][ny]: #기존 거리보다 덜 하다면
+                    distance[nx][ny] = new_cost #갱신
+                    heapq.heappush(q, (new_cost, nx, ny))
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1] #상하좌우
+
+cnt = 1 #시작번호
+while(True):
+    n = int(input()) #맵의 크기 입력
+    if n == 0: #종료
+        break
+    graph = list(list(map(int, input().split())) for _ in range(n)) #맵 정보 입력
+    distance = [[INF] * n for _ in range(n)] #가중치
+    
+    dijkstra()
+    cnt += 1
+    
+#시간을 줄이기 위해서 같다를 빼고 함수에 매개변수도 주지 않았다.
+#f-string은 f랑 {} 괄호만 알면 된다.
