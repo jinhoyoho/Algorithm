@@ -1,0 +1,39 @@
+import heapq
+import sys
+input = sys.stdin.readline
+INF = 987654321
+
+def dijkstra(graph, start_node):
+    q = list() #힙을 넣을 리스트
+    distance = [INF] * (n+1) #거리 초기화
+    distance[start_node] = 0 #출발 거리 0
+    heapq.heappush(q, (0, start_node)) #(거리, 시작노드 입력)
+
+    while q:
+        cost, current_node = heapq.heappop(q)
+        if distance[current_node] < cost: #기존의 거리가 더 짧아서 갱신할 필요가 없다면
+            continue   
+        for next_info in graph[current_node]: #현재에서 다음 노드로 가는것 탐색
+            next_cost, next_node = next_info #다음 정보 탐색
+            sum_cost = cost + next_cost #현재와 다음 거리의 합
+            if sum_cost < distance[next_node]: #기존의 다음 거리보다 작다면
+                distance[next_node] = sum_cost #갱신
+                heapq.heappush(q, (sum_cost, next_node))
+    
+    cnt = 0
+    time = 0
+    for i in range(n+1):
+        if distance[i] != INF: #거리가 갱신이 됐다면
+            cnt += 1
+            time = max(distance[i], time)
+    print(cnt, time)
+
+t = int(input()) #테스트 케이스
+while t:
+    n, d, start_node = map(int, input().split()) #컴퓨터 개수, 의존성 개수, 해킹당한 컴퓨터 번호
+    graph = [[] for _ in range(n+1)] #1~n번까지 컴퓨터 개수
+    for _ in range(d):
+        a, b, s = map(int, input().split()) #b->a를 cost의 비용으로
+        graph[b].append((s, a)) #a까지 가는데 s만큼의 시간이 걸린다        
+    dijkstra(graph, start_node) #다익스트라 실행
+    t -= 1
