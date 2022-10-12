@@ -1,0 +1,22 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #포도주 잔 개수
+wine = [0] * 10000
+dp = [0] * 10000 #dp테이블과 wine은 최대 만들 수 있는 경우로 초기화 -> n=1이 나오는 경우 IndexError를 방지하기 위해서
+for i in range(n):
+    wine[i] = int(input()) #와인 값 저장
+
+dp[0] = wine[0] #와인 처음 양
+dp[1] = wine[0] + wine[1] #와인 2개 먹은 양
+#(처음이랑 3번째 와인을 마신 경우, 두번째랑 세번째 와인을 마신 경우, 첫번째 두번째 와인을 마신 경우)
+dp[2] = max(wine[0] + wine[2], wine[1] +wine[2], dp[1]) 
+
+for i in range(3, n):
+    #(i-3번째 i-1번째 i번째 와인을 먹는 경우, i-2번째 i번째 와인을 마신 경우, 와인을 먹지 않은 경우)
+    dp[i] = max(dp[i-3] + wine[i-1] + wine[i], dp[i-2] + wine[i], dp[i-1])
+
+print(max(dp))
+
+#연속으로 무엇을 할 수 없는 문제.
+#다음 수를 생각하기 보다는 이전 수에서 생각을 해보자.
