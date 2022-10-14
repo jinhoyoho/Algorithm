@@ -1,0 +1,50 @@
+import sys
+input = sys.stdin.readline
+
+#전위 순회
+def preOrder(i):
+    if i == '.': #노드가 없다면
+        return #종료
+    
+    idx = name_num[i] #해당하는 노드의 값
+    print(i, end = '') #루트 탐색
+    preOrder(graph[idx][0]) #왼쪽 탐색
+    preOrder(graph[idx][1]) #오른쪽 탐색
+
+#중위 순회
+def inOrder(i):
+    if i == '.': #노드가 없다면
+        return #종료
+    
+    idx = name_num[i] #해당하는 노드의 값
+    inOrder(graph[idx][0]) #왼쪽 탐색
+    print(i, end = '') #루트 탐색
+    inOrder(graph[idx][1]) #오른쪽 탐색
+
+#후위 순회
+def postOrder(i):
+    if i == '.': #노드가 없다면
+        return #종료
+    
+    idx = name_num[i] #해당하는 노드의 값
+    postOrder(graph[idx][0]) #왼쪽 탐색
+    postOrder(graph[idx][1]) #오른쪽 탐색
+    print(i, end = '') #루트 탐색
+    
+
+n = int(input()) #노드 개수 입력
+graph = [[] for _ in range(n)] #n개의 노드 생성
+name_num = {} #이름과 숫자를 매칭하는 딕셔너리
+
+for i in range(n):
+    #(자기 이름, 왼쪽 노드, 오른쪽 노드)입력
+    name, left, right = map(str, input().split())
+    graph[i] = (left, right) #왼쪽, 오른쪽 노드 그래프에 입력
+    name_num[name] = i #딕셔너리 저장
+
+
+preOrder('A')
+print() #줄바꿈
+inOrder('A')
+print() #줄바꿈
+postOrder('A')
