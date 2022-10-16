@@ -1,0 +1,28 @@
+#범위가 주어질 때의 소수 찾기
+import math
+import sys
+input = sys.stdin.readline
+
+array = [True for i in range(10001)] #모든 수가 소수인 것으로 초기화
+
+#에라토스테네스의 체
+for i in range(2, int(math.sqrt(10000))+1):
+    if array[i] == True: #소수인 경우(남은수인 경우)
+        j = 2 #2배부터 시작
+        while i * j <= 10000:
+            array[i*j] = False
+            j += 1
+
+t = int(input()) #테스트 케이스 입력
+for _ in range(t): #t번 반복
+    n = int(input()) #골드바흐 파티션으로 나눌 n값 입력
+    result = list() #결과를 저장할 리스트
+    #2부터 루트n까지 탐색 -> 합으로 표현되는 것이므로 절반을 기준으로 절반 이하에서 하나, 이상에서 하나를 골라야한다.
+    for i in range(2, n//2 + 1): 
+        if array[i] and array[n-i]: #소수로 표현 가능
+            result.append((n-2*i, i, n-i)) #(차, 작은 수, 큰 수) 저장
+    result.sort(key = lambda x : x[0]) #차를 기준으로 오름차순 정렬
+    print(result[0][1], result[0][2]) #결과 출력
+    
+#sorted()는 새로운 객체를 생성하는 함수
+#sort()는 기존 객체에서 변경하는 메서드
