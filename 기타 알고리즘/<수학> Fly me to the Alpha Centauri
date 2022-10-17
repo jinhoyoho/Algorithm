@@ -1,0 +1,26 @@
+import sys
+import math
+input = sys.stdin.readline
+
+t = int(input()) #테스트 케이스 입력
+
+for _ in range(t): #t번 반복
+    result = 0
+    x, y = map(int, input().split()) #좌표 입력
+    distance = y - x #거리 입력
+    num = math.floor(math.sqrt(distance)) #distance의 정수 제곱근
+    num_square = num ** 2 #정수 제곱
+    criteria = math.sqrt(num_square)
+
+    if distance > num_square + criteria: #오버되면
+        result = 2 * num + 1 
+    elif num_square < distance <= num_square + criteria: #수가 더 크다면
+        result = num * 2
+    elif distance == num_square: #같다면
+        result = num * 2 - 1
+
+    if distance <= 3: #3이하면
+        result = distance 
+    print(result)
+
+#수를 나열해서 규칙을 찾는 문제. 규칙을 찾기에는 쉬우나 코드로 구현하기가 어렵다.
