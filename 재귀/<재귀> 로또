@@ -1,0 +1,25 @@
+from itertools import combinations
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+while(True):
+    data = input() #문자로 모두 입력
+    num_list = deque() #덱
+    num = '' #숫자를 저장할 입력값
+    for element in data: #data의 입력값들 저장
+        if element.isdigit(): #숫자라면
+            num += element
+        else:
+            num_list.append(int(num)) #숫자 저장
+            num = '' #입력 초기화
+    count = num_list.popleft() #숫자개수 반환
+    if count == 0: #종료
+        break
+    for result in combinations(num_list, 6): #리스트 중에서 6개 선택
+        for i in range(len(result)):
+            print(result[i], end = ' ')
+        print()
+    print() #테스트 케이스 사이의 빈 줄
+    
+#입력 받는 방법이 어려웠다.
