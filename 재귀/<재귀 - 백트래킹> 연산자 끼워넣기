@@ -1,0 +1,38 @@
+import sys
+input = sys.stdin.readline
+
+def cal(count, value):
+    global plus, minus, mul, div, max_value, min_value #전역변수 사용
+    if count == n: #모든 경우 입력 (exit point)
+        max_value = max(max_value, value)
+        min_value = min(min_value, value) #값 갱신
+    else:
+        if plus > 0: #더하기
+            plus -= 1 #더하기 실행
+            cal(count + 1, value + num_list[count]) #recursion
+            plus += 1 #원상복구
+        if minus > 0: #빼기
+            minus -= 1 #빼기 실행
+            cal(count + 1, value - num_list[count]) #recursion
+            minus += 1 #원상복구
+        if mul > 0: #곱하기
+            mul -= 1 #곱하기 실행
+            cal(count + 1, value * num_list[count]) #recursion
+            mul += 1 #원상복구
+        if div > 0: #나누기
+            div -= 1 #나누기 실행
+            cal(count + 1, int(value / num_list[count])) #recursion, c++14기준 나누기
+            div += 1 #원상복구
+
+n = int(input()) #수열의 개수 입력
+num_list = list(map(int, input().split())) #정수 수열 입력
+plus, minus, mul, div = map(int, input().split()) #더하기, 빼기, 곱하기, 나누기 개수 입력
+max_value = -9876543210 #최대값
+min_value = 9876543210 #최소값
+
+cal(1, num_list[0]) #개수 및 인덱스는 1, 첫 번째 정수 입력
+
+print(max_value)
+print(min_value)
+
+#나뭇가지를 자르는 재귀의 백트래킹
