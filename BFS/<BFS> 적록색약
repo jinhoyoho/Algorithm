@@ -1,0 +1,66 @@
+from collections import deque 
+import sys
+input = sys.stdin.readline
+
+def bfs(value_list, i, j): #bfs정의
+    global visited
+    visited[i][j] = True #방문
+    q = deque() #큐
+    q.append((i, j)) #좌표 입력
+    while q: #큐가 빌때까지
+        x, y = q.popleft() #좌표 
+        for i in range(4): #4방향 탐색
+            nx = x + dx[i]
+            ny = y + dy[i] #새로운 좌표
+            #새로운 좌표가 범위 안에 있고 방문한 적이 없고 찾으려는 값과 같다면 bfs실행
+            if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny]:
+                for value in value_list:
+                    if graph[nx][ny] == value: #찾는 값과 같다면
+                        visited[nx][ny] = True #방문
+                        q.append((nx, ny)) #좌표 입력
+                
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, 1, -1] #상하좌우 탐색    
+
+n = int(input()) #맵의 크기
+graph = list(list(input().rstrip()) for _ in range(n)) #맵입력
+visited = [[False] * n for _ in range(n)] #방문기록
+result_RGCB = 0 #적록색맹
+count_r = 0 #Red구역
+count_g = 0 #Green구역
+count_b = 0 #Blue구역
+
+for i in range(n):
+    for j in range(n):
+        if not visited[i][j]: #방문한 적이 없다면
+            if graph[i][j] == 'R': #빨강일 경우
+                bfs('R', i, j) #R에 대해서 bfs 실행
+                count_r += 1 #Red구역 1증가
+            elif graph[i][j] == 'G': #초록일 경우
+                bfs('G', i, j) #G에 대해서 dfs실행
+                count_g += 1 #Green구역 1증가
+            elif graph[i][j] == 'B': #파랑일 경우
+                bfs('B', i, j) #B에 대해서 dfs실행
+                count_b += 1 #Blue구역 1증가
+result_normal = count_r + count_g + count_b  #일반사람
+
+visited = [[False] * n for _ in range(n)] #방문 기록 초기화
+count_rg = 0 #빨간색과 초록색 구별x
+count_b = 0
+
+for i in range(n):
+    for j in range(n):
+        if not visited[i][j]:
+            if graph[i][j] == 'R' or graph[i][j] == 'G':
+                bfs(['R','G'], i, j) #R에 대해서 bfs실행
+                count_rg += 1
+            else:
+                bfs('B', i, j)
+                count_b += 1
+                
+result_RGCB = count_rg + count_b #적록색맹인 사람 구역 수
+
+print(result_normal, result_RGCB) #출력
+
+#처음에 DFS로 문제를 해결하려고 했으나 재귀가 너무 많아져서 그런지 메모리 오류가 발생했다. 그래서 BFS로 풀었다.
