@@ -1,0 +1,22 @@
+import sys
+import math
+input = sys.stdin.readline
+
+t = int(input()) #테스트 케이스
+for _ in range(t): #t번 반복
+    x1, y1, r1, x2, y2, r2 = map(int, input().split())
+    if x1 == x2 and y1 == y2:
+        if r1 == r2:
+            result = -1
+        else:
+            result = 0
+    else:
+        distance = math.sqrt(math.pow(x1-x2, 2) + math.pow(y1-y2, 2)) #점과 점 사이의 거리
+        if r1 + r2 > distance and abs(r1 - r2) < distance: #반지름의 합이 두 점사이의 거리보다 클 때
+            result = 2 #교점이 2개
+        elif r1 + r2 == distance or abs(r1 - r2) == distance: #외접 내접해서 한 점에서 만남
+            result = 1 #한개
+        else: #작을때
+            result = 0 #0개
+
+    print(result)
