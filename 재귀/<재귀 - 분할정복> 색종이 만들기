@@ -1,0 +1,82 @@
+import sys
+input = sys.stdin.readline
+
+def cut_paper(arr, cnt): #종이 자르기 (그래프 배열, 변의 길이)
+    global count_w, count_b #전역변수 설정
+
+    if cnt == 1: #종이가 한장이면
+        if arr[0][0] == '1': #파란색 종이라면
+            count_b += 1 #개수 증가
+            return #종료
+        else: #하얀색 종이라면
+            count_w += 1 #개수 증가
+            return #종료
+            
+    criteria = arr[0][0] #기준점
+    #탐색
+    for i in range(cnt):
+        for j in range(cnt):
+            if arr[i][j] != criteria: #기존의 값과 다르다면
+                divided_cnt = int(cnt / 2) #2로 나눈 값
+                
+                sec1 = [[0] * divided_cnt for _ in range(divided_cnt)]
+                sec2 = [[0] * divided_cnt for _ in range(divided_cnt)]
+                sec3 = [[0] * divided_cnt for _ in range(divided_cnt)]
+                sec4 = [[0] * divided_cnt for _ in range(divided_cnt)]
+                
+                for i in range(cnt):
+                    for j in range(cnt):
+                        if i < divided_cnt and j < divided_cnt:
+                            sec1[i][j] = arr[i][j] #1번 구역으로 나누기
+                        elif i < divided_cnt and divided_cnt <= j:
+                            sec2[i][j-divided_cnt] = arr[i][j] #2번 구역으로 나누기
+                        elif divided_cnt <= i and j < divided_cnt:
+                            sec3[i-divided_cnt][j] = arr[i][j] #3번 구역으로 나누기
+                        else:
+                            sec4[i-divided_cnt][j-divided_cnt] = arr[i][j] #4번 구역으로 나누기
+                cut_paper(sec1, divided_cnt) #1번구역
+                cut_paper(sec2, divided_cnt) #2번구역
+                cut_paper(sec3, divided_cnt) #3번구역
+                cut_paper(sec4, divided_cnt) #4번구역
+                return #종료
+
+    if criteria == '1': #파란색 종이라면
+        count_b += 1 #파란색 종이 증가
+    else:
+        count_w += 1 #하얀색 종이 증가
+
+n = int(input()) #한 변의 길이
+
+graph = list(list(map(str, input().split())) for _ in range(n)) #색종이 입력
+
+count_w = 0 #하얀색(0) 색종이
+count_b = 0 #파란색(1) 색종이
+
+cut_paper(graph, n) #탐색
+
+print(count_w) #하얀색 종이 수
+print(count_b) #파란색 종이 수
+
+
+
+####### 다른 사람의 풀이 #######
+def solution(x, y, N) : #분할정복 부분
+  color = paper[x][y] #기준값(criteria)
+  for i in range(x, x+N) : #x부터 x+N-1까지 반복
+    for j in range(y, y+N) : #y부터 y+N-1까지 반복
+      if color != paper[i][j] : #다르면 -> 분할정복 시행
+        solution(x, y, N//2) #1구역
+        solution(x, y+N//2, N//2) #2구역
+        solution(x+N//2, y, N//2) #3구역
+        solution(x+N//2, y+N//2, N//2) #4구역
+        return #종료
+  if color == 0 :
+    result.append(0)
+  else :
+    result.append(1)
+
+solution(0,0,N)
+print(result.count(0))
+print(result.count(1))
+
+#탐색하는 부분의 범위만 분할정복 해주므로써 메모리 낭비를 최소화 시켰다.
