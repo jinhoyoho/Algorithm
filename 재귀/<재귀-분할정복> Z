@@ -1,0 +1,37 @@
+import sys
+input = sys.stdin.readline
+
+n, r, c = map(int,input().split())
+result = 0
+
+def search(x, y, cnt):
+    global r, c, result
+    if x == r and y == c:
+        print(result)
+        return
+
+    if cnt == 1:
+        for i in range(x, x+2):
+            for j in range(y, y+2):
+                result += 1
+                if j == c and i == r:
+                    print(result-1)
+                    return
+    else:
+        if r < x + 2 ** (cnt-1) and c < y + 2 ** (cnt-1):
+            search(x, y, cnt -1)
+            return
+        elif r < x + 2 **(cnt-1):
+            result += 2 ** (cnt-1) * 2 ** (cnt-1)
+            search(x, y + 2 ** (cnt - 1), cnt-1)
+            return
+        elif c < y + 2 ** (cnt-1):
+            result += 2 ** (cnt - 1) * 2**cnt
+            search(x + 2 **(cnt-1), y, cnt-1)
+            return
+        else:
+            result += 2 ** (cnt-1) * 2**cnt + 2 ** (cnt-1) * 2 ** (cnt-1)
+            search(x+ 2**(cnt-1), y + 2 **(cnt-1), cnt-1)
+            return
+
+search(0,0, n)
