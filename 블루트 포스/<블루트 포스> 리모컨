@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #원하는 채널
+m = int(input()) #고장난 채널 수
+break_button = list(map(int, input().split())) #고장난 버튼 입력
+
+result = abs(n-100) #채널 변경없이 직접 입력
+
+for ch in range(1000001): #0부터 100만 채널 수
+    ch = str(ch) #문자로 변경한 채널
+
+    for i in range(len(ch)): #현재 채널 하나씩 분석
+        if int(ch[i]) in break_button: #고장난 버튼에 있다면
+            break
+        elif i == len(ch) - 1: #마지막까지 온 경우
+            result = min(result, abs(int(ch) - n) + len(ch))
+print(result)
+
+#채널을 0부터 100만개를 탐색한다. 원하는 채널은 50만이내의 값
