@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+result = [0] * m
+
+
+def backtracking(num, cnt):
+    global result
+    if cnt == m:
+        print(*result)
+        return
+        
+    for i in range(num, n+1):
+        result[cnt] = i #값을 새로운 값으로 계속 갱신
+        backtracking(i+1, cnt+1)
+
+    return
+
+backtracking(1,0)
