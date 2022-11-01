@@ -1,0 +1,112 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+gear1 = deque()
+gear2 = deque()
+gear3 = deque()
+gear4 = deque()
+
+a = {1 : gear1, 2:gear2, 3:gear3, 4:gear4}
+
+for i in range(1,5):
+    data = list(input().rstrip())
+    for j in range(8):
+        a[i].append(data[j])
+
+k = int(input())
+
+for _ in range(k):
+    num, wise = map(int, input().split())
+    rotate_index = [0] * 5
+    rotate_index[num] = wise
+
+    if num == 1:
+       for i in range(3):
+           if a[num+i][2] != a[num+i+1][6]:
+               wise = -wise
+               rotate_index[num+i+1] = wise
+           else:
+               break
+               
+    elif num == 2:
+        if a[1][2] != a[2][6]:
+            copy_wise = -wise
+            rotate_index[1] = copy_wise
+
+        for i in range(2):
+            if a[num+i][2] != a[num+i+1][6]:
+               wise = -wise
+               rotate_index[num+i+1] = wise
+            else:
+                break
+                
+    elif num == 3:
+        if a[3][2] != a[4][6]:
+            copy_wise = -wise
+            rotate_index[4] = copy_wise
+
+        for i in range(2):
+            if a[num-i-1][2] != a[num-i][6]:
+               wise = -wise
+               rotate_index[num-i-1] = wise
+            else:
+                break
+
+    elif num == 4:
+        for i in range(3):
+            if a[num-i-1][2] != a[num-i][6]:
+               wise = -wise
+               rotate_index[num-i-1] = wise
+            else:
+                break
+                
+    for i in range(1, 5):
+        a[i].rotate(rotate_index[i])
+
+
+result = 0
+for i in range(1, 5):
+    if a[i][0] == '1':
+        result += 2 ** (i-1)
+
+print(result)
+
+
+
+#너무 지저분해서 다른 사람이 푼 풀이를 확인하였다. 너무 깔끔하게 잘 푸신 것 같다.
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+gear = {} #
+for i in range(1, 5):
+    gear[i] = deque((map(int, input().rstrip())))
+
+def rotate_left(x, di):
+    if x < 1 or gear[x][2] == gear[x+1][6]: #왼쪽으로 쉬프트x
+        return
+    if gear[x][2] != gear[x+1][6]:
+        rotate_left(x-1, -di)
+        gear[x].rotate(di)
+
+def rotate_right(x, di):
+    if x > 4 or gear[x-1][2] == gear[x][6]: #중단
+        return
+    if gear[x-1][2] != gear[x][6]:
+        rotate_right(x+1, -di) #다음 오른쪽꺼 되는지 확인
+        gear[x].rotate(di) #현재 기어는 회전
+
+for _ in range(int(input())):
+    x, direction = map(int, input().split())
+
+    rotate_left(x-1, -direction) #왼쪽 기어들 확인
+    rotate_right(x+1, -direction) #오른쪽 기어들 확인 -> -direcion을 해주는 이유는 x+1이 회전이 될 때 반대 방향으로 회전을 해야하기 때문(함수에서 자기 자신은 direction으로 돌기 때문에)
+    gear[x].rotate(direction) #자기 자신 돌리기
+
+
+result = 0
+for i in range(1, 5):
+    result += gear[i][0] * (2 ** (i-1))
+
+print(result)
