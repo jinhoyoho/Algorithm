@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #1부터 n까지 수 중에서 m개 선택
+result = [0] * m
+
+def backtracking(num, cnt):
+    
+    global result
+    if cnt == m:
+        print(*result) #결과 출력
+        return
+
+    for i in range(num, n+1):
+        result[cnt] = i #cnt자리에 수 저장
+        backtracking(i, cnt+1)
+
+    return
+
+backtracking(1, 0)
