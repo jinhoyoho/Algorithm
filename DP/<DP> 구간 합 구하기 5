@@ -1,0 +1,19 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #n의 크기, m번 구하기
+
+graph = list(list(map(int, input().split())) for _ in range(n)) #nxn개의 그래프 생성
+dp = [[0 for _ in range(n+1)] for _ in range(n)] #nxn개의 dp테이블 생성
+
+for i in range(n):
+    for j in range(1, n+1):
+            dp[i][j] = dp[i][j-1] + graph[i][j-1]
+   
+for _ in range(m):
+    result = 0
+    x1, y1, x2, y2 = map(int, input().split())
+    for i in range(x1-1, x2):
+        result += dp[i][y2] - dp[i][y1-1]
+        
+    print(result)
