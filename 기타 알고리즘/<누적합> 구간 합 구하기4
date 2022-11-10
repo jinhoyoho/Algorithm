@@ -1,0 +1,15 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #개수와 반복회수 입력
+
+num = list(map(int, input().split())) #수 입력
+dp = [0] * (n+1)
+dp[0] = 0
+
+for i in range(n):
+    dp[i+1] = dp[i] + num[i]
+
+for _ in range(m):
+    start, end = map(int, input().split())
+    print(dp[end] - dp[start-1])
