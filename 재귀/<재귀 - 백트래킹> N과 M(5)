@@ -1,0 +1,26 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split()) #n개의 자연수, m개 선택
+num = list(map(int, input().split())) #수열입력
+num.sort() #오름차순 정렬
+
+visited = [False] * n
+result = [] #결과를 담을 리스트
+
+def search(num, n, count):
+    if count == m:
+        print(" ".join(map(str, result)))
+        return
+
+    for i in range(n):
+        if not visited[i]:
+            visited[i] = True
+            result.append(num[i])
+            search(num, n, count+1)
+            result.pop() #원상복구
+            visited[i] = False
+
+search(num, n, 0)
+
+#순열 툴을 이용하는 것 보다는 구현을 통하여 문제를 풀었다.
