@@ -1,0 +1,21 @@
+import sys
+input = sys.stdin.readline
+
+n, m = map(int, input().split())
+num = list(map(int, input().split()))
+num.sort() #오름차순 정렬
+
+def search(arr, depth):
+    if depth == m:
+        print(*result)
+        return
+    
+    for j in range(len(arr)):
+        result.append(arr[j])
+        search(arr[j:], depth+1)
+        result.pop()
+
+for i in range(n):
+    result = list() #결과를 담을 리스트
+    result.append(num[i])
+    search(num[i:], 1)
