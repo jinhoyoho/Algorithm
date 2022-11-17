@@ -1,0 +1,44 @@
+import heapq
+import sys
+input = sys.stdin.readline
+INF = 1e9 #무한대
+
+def dijkstra(start):
+    distance[start] = 0 #시작 거리 0
+    q = [] #힙 생성
+    heapq.heappush(q, (0, start)) #(거리, 노드) 큐에 삽입
+    while q:
+        dist, now = heapq.heappop(q) #거리, 현재 노드
+        if distance[now] < dist:
+            continue
+        for node in graph[now]: #현재 노드에 인접한 노드
+            cost = dist + node[1]
+            if cost < distance[node[0]]:
+                distance[node[0]] = cost
+                prev[node[0]] = now #이전 노드 저장
+                heapq.heappush(q, (cost, node[0]))
+
+n = int(input()) #도시의 개수
+graph = [[] for _ in range(n+1)] #1부터 n까지 노드 생성
+prev = [0] * (n+1) #이전 방문 노드
+distance = [INF] * (n+1)
+m = int(input()) #버스의 개수
+for _ in range(m):
+    a, b, c = map(int, input().split()) #a에서 b로 가는데 c만큼 걸림
+    graph[a].append((b, c)) #b까지 가는데 c만큼 걸림
+
+start, end = map(int, input().split()) #start에서 end까지 가는 경로
+
+dijkstra(start)
+print(distance[end])
+
+result = [] #거친 도시를 담을 리스트
+index = end
+result.append(index) #결과 저장
+while prev[index] != 0:
+    index = prev[index]
+    result.append(index)
+
+print(len(result))
+result.reverse()
+print(*result)
