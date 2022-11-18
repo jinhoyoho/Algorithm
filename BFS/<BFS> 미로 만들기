@@ -1,0 +1,34 @@
+from collections import deque
+import sys
+input = sys.stdin.readline
+
+def bfs(): #bfs
+    visited = [[-1] * n for _ in range(n)]
+    visited[0][0] = 0 #시작 방문처리
+    q = deque()
+    q.append((0,0)) #(x, y)
+    while q:
+        x, y = q.popleft()
+        if x == n-1 and y == n-1: #도착했다면
+            print(visited[n-1][n-1])
+            return #종료
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            if 0 <= nx < n and 0 <= ny < n: #범위 안에 있다면
+                if visited[nx][ny] == -1: #방문한 적이 없다면
+                    if graph[nx][ny] == '1': #흰방이면
+                        visited[nx][ny] = visited[x][y] #벽 안부수기
+                        q.appendleft((nx, ny)) #흰방 제일 먼저 탐색
+                    elif graph[nx][ny] == '0':
+                        visited[nx][ny] = visited[x][y] + 1 #벽 부수기
+                        q.append((nx, ny)) #검은 방 나중에 탐색
+                
+
+n = int(input()) #방의 개수
+graph = [list(input().rstrip()) for _ in range(n)]
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1] #상하좌우 탐색
+
+bfs()
