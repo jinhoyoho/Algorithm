@@ -1,0 +1,34 @@
+import heapq
+import sys
+input = sys.stdin.readline
+
+def dijkstra(): #bfs
+    visited = [[0] * n for _ in range(n)]
+    visited[0][0] = 1 #방문처리
+    q = []
+    heapq.heappush(q, (0, 0, 0)) #(weight, x, y)
+    
+    while q:
+        weight, x, y = heapq.heappop(q)
+        if x == n-1 and y == n-1: #도착했다면
+            print(weight)
+            return #종료
+            
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            #범위 안에 있고 방문 기록이 없다면
+            if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny]:
+                visited[nx][ny] = 1 #탐색처리
+                if graph[nx][ny] == '1': #흰방이면
+                    heapq.heappush(q, (weight, nx, ny))
+                elif graph[nx][ny] == '0':
+                    heapq.heappush(q, (weight + 1, nx, ny))
+
+n = int(input()) #방의 개수
+graph = [list(input().rstrip()) for _ in range(n)]
+
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1] #상하좌우 탐색
+
+dijkstra()
