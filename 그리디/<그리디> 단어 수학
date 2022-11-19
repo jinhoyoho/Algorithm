@@ -1,0 +1,33 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #개수
+arr = [[] for _ in range(n)]
+dic = {} #딕셔너리로 저장
+for i in range(n):
+    arr[i] = list(input().rstrip())
+    length = len(arr[i])
+    for j in range(length): #input의 개수
+        if arr[i][j] not in dic: #j번째 알파벳이 dic에 없으면은
+            dic[arr[i][j]] = 10 ** (length - j - 1)
+        else: #존재하면
+            dic[arr[i][j]] += 10 ** (length - j - 1)
+
+dic = sorted(dic.items(), key = lambda x : x[1], reverse = True)
+idx = 9 #9부터 저장
+result_dic = {}
+for i in range(len(dic)):
+    result_dic[dic[i][0]] = idx #순서대로 딕셔너리에 저장
+    idx -= 1
+
+result = [[] for _ in range(n)] #n개 배열을 수로 저장
+for i in range(n):
+    for element in arr[i]: #앞에서부터 세주기
+        result[i].append(result_dic[element])
+
+count = 0
+for i in range(n):
+    count += int("".join(map(str,result[i])))
+print(count)
+
+#변수를 너무 많이 설정한 것 같다.
