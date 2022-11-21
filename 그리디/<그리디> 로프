@@ -1,0 +1,11 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #로프개수
+ropes = list(int(input()) for _ in range(n)) #로프 입력
+ropes.sort() #로프 오름차순
+
+result = 0
+for i in range(n):
+    result = max(result, ropes[i] * (n-i))
+print(result)
