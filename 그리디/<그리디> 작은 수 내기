@@ -1,0 +1,18 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input()) #카드 개수
+me = list(map(int, input().split())) #내 카드 입력
+ceo = list(map(int, input().split())) #사장님 카드 입력
+me.sort()
+ceo.sort() #카드 오름차순 정렬
+
+count = 0
+for i in range(n//2+1):
+    if me[i] < ceo[n//2 + i]:
+        count += 1
+
+if count > n//2:
+    print("YES")
+else:
+    print("NO")
