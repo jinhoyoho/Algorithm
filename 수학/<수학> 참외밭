@@ -1,0 +1,25 @@
+import sys
+input = sys.stdin.readline
+
+k = int(input()) #참외 개수
+total_list = [] #전체 길이
+width = [] #가로
+height = [] #세로
+
+for _ in range(6): #6각형
+    d, length = map(int, input().split())
+    total_list.append(length)
+    if d == 1 or d == 2:
+        width.append(length) #가로 입력
+    else:
+        height.append(length) #세로 입력
+        
+big_box = max(width) * max(height) #전체 크기
+maxhidx = total_list.index(max(height)) #세로중에 제일 큰 값 인덱스
+maxwidx = total_list.index(max(width)) #가로중에 제일 큰 값 인덱스
+
+#큰 값의 앞, 뒤 인덱스는 무조건 유효한 값이 된다. (작은 사각형의 가로, 세로가 아니란 얘기)
+small_width = abs(total_list[maxhidx-1] - total_list[(maxhidx-5 if maxhidx == 5 else maxhidx+1)])
+small_height = abs(total_list[maxwidx-1] - total_list[(maxwidx-5 if maxwidx == 5 else maxwidx+1)])
+
+print((big_box - small_width * small_height) * k)
