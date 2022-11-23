@@ -1,0 +1,19 @@
+import sys
+input = sys.stdin.readline
+
+a, d, k = map(int, input().split())
+d = d/100 #확률로 만들기
+k = k/100
+count = 1
+prev = 1 #틀릴 확률
+result = count * a * prev * d #첫번째 경우의 수
+
+while (d < 1):
+    count += 1 #회수 증가
+    prev *= (1-d) #이전값
+    d *= (1 + k) #새로운 확률값
+    if d > 1: #확률이 오버되면
+        d = 1
+    result += count * a *  prev * d
+    
+print(round(result, 7))
