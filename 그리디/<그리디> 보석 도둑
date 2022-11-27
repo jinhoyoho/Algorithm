@@ -1,0 +1,23 @@
+import heapq
+import sys
+input = sys.stdin.readline
+
+n, k = map(int, input().split()) #보석 개수, 가방 개수
+jews = list(list(map(int, input().split())) for _ in range(n)) #(무게, 가치)
+bags = list(int(input()) for _ in range(k)) #k개의 가방 입력
+jews.sort() #오름차순 정렬
+bags.sort()
+
+jew_tmp = []
+result = 0 #결과
+for bag in bags:
+    while jews and bag >= jews[0][0]: #가방에 넣을 수 있다면
+        heapq.heappush(jew_tmp, -jews[0][1])
+        heapq.heappop(jews)
+        
+    if jew_tmp:
+        result += heapq.heappop(jew_tmp)
+    elif not jews:
+        break
+
+print(-result)
