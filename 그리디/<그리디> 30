@@ -1,0 +1,15 @@
+import sys
+input = sys.stdin.readline
+
+n = input().rstrip()
+n = sorted(n, reverse = True) #내림차순 정렬하기
+sum = 0
+if '0' not in n: #0이 없으면 30의 배수 못 만듬
+    print(-1)
+else:
+    for i in n:
+        sum += int(i) #자리수 모두 더하기
+    if sum % 3 != 0: #3으로 나눠지는지 확인
+        print(-1)
+    else:
+        print("".join(n))
