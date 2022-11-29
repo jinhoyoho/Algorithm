@@ -1,0 +1,14 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+weights = list(map(int, input().split()))
+weights.sort() #오름차순 정렬
+
+target = 1
+for num in weights:
+    if target < num:
+        break
+    target += num
+
+print(target)
