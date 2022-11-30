@@ -1,0 +1,54 @@
+import sys
+input = sys.stdin.readline
+
+def find_parent(parent, x):
+    if parent[x] != x:
+        return find_parent(parent, parent[x])
+    return x
+
+def union_parent(parent, a, b):
+    a = find_parent(parent, a)
+    b = find_parent(parent, b)
+    if a < b: #a가 더 상위 노드라면
+        parent[b] = a
+    else:
+        parent[a] = b
+
+n = int(input()) #n개 행성
+
+cycle = False #사이클 발생 여부
+edges = [] #비용 저장
+x_dots = []
+y_dots = []
+z_dots = [] #x, y, z끼리 좌표 입력
+
+for i in range(n):
+    x, y, z = map(int, input().split())
+    x_dots.append((x, i)) #i번째 x좌표
+    y_dots.append((y, i)) #i번째 y좌표 
+    z_dots.append((z, i)) #i번째 z좌표
+x_dots.sort() #오름차순 정렬
+y_dots.sort() #오름차순 정렬
+z_dots.sort() #오름차순 정렬
+
+for node in x_dots, y_dots, z_dots: #x끼리 -> y끼리 -> z끼리 비교해서 넣기
+    for i in range(1, n):
+        w1, a = node[i-1]
+        w2, b = node[i]
+        edges.append((abs(w1-w2), a, b))
+edges.sort(reverse = True)
+
+result = 0 #결과값
+count = n-1 #n-1개의 간선 생성
+parent = [i for i in range(n+1)] #부모
+while count:
+    cost, a, b = edges.pop()
+    if find_parent(parent, a) != find_parent(parent, b):
+        union_parent(parent, a, b) #합치기
+        result += cost
+        count -= 1
+
+print(result)
+
+#모든 edge를 조사하면 10억개가 나오므로 메모리가 초과될 수 밖에 없다.
+#따라서 인접한 노드들끼리만 조사해서 저장시켜 준다. 이렇게 되면 (n-1)*3개의 edge가 저장이 된다. (최대 30만개)
