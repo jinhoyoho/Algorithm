@@ -1,0 +1,22 @@
+import sys
+input = sys.stdin.readline
+
+num = [True] * 1001 #100개의 수 생성
+num[1] = False #1은 소수가 아님
+for i in range(1, 1000): #1부터 100까지 탐색
+    if num[i]: #수 i가 True일 때 시작
+        cnt = 2
+        while i * cnt <= 1000:
+            num[i*cnt] = False #소수 아닌것 출력
+            cnt += 1
+
+n = int(input()) #n개 개수 입력
+datas = list(map(int, input().split())) #원하는 수 입력
+result = 0 
+for data in datas:
+    if num[data]:
+        result += 1
+
+print(result)
+
+#에라토스테네스의 체로 소수를 찾았다.
