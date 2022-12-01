@@ -1,0 +1,16 @@
+import sys
+input = sys.stdin.readline
+
+def gcd_Eueclid(a, b): #a가 더 큼
+    rest = a % b
+    if rest == 0:
+        return b
+    else:
+        return gcd_Eueclid(b, rest)
+
+a, b = map(int, input().split())
+
+print(gcd_Eueclid(a, b)) #최대공약수
+print(int(a*b / gcd_Eueclid(a,b))) #최소공배수
+
+#유클리드 호제법을 이용해서 최대공약수와 최소공배수를 구했다.
