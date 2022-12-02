@@ -1,0 +1,14 @@
+import sys
+input = sys.stdin.readline
+
+while True:
+    try:
+        n = int(input()) #n의 배수
+        result = 1 #자리수
+        num = 1 #1부터 시작
+        while num % n != 0:
+            num += 10**result
+            result += 1
+        print(result)
+    except:
+        break
