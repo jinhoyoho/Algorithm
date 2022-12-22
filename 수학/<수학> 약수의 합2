@@ -1,0 +1,28 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+f = [1] * (n+1) #n+1까지 1저장 -> 모든 수는 1의 약수
+
+for i in range(2, n+1): #2부터 n까지
+    j = 1
+    while i * j <= n:
+        f[i*j] += i
+        j += 1
+
+print(sum(f[1:n+1]))
+
+#개선된 코드
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+
+sum = 0 #합
+for i in range(1, n+1): #2부터 n까지
+    sum += (n//i) * i
+
+print(sum)
+
+최대 공약수를 전부 구하기보다는 n까지 가는데 i번째 해당하는 값이 몇번 나오는지를 확인하고 더하면 된다.
