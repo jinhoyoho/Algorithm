@@ -1,0 +1,23 @@
+import sys
+input = sys.stdin.readline
+
+def backtracking(start, count):
+    if count == m:
+        print(*result)
+        return
+
+    for j in range(start+1, n):
+        result.append(nums[j])
+        backtracking(j, count+1)
+        result.pop()
+        
+    return
+    
+n, m = map(int, input().split())
+nums = list(map(int, input().split())) #숫자 입력
+nums.sort() #오름차순 정렬
+
+for i in range(n):
+    result = list() #결과 저장
+    result.append(nums[i])
+    backtracking(i, 1)
