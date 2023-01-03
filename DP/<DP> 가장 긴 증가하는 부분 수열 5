@@ -1,0 +1,23 @@
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+num = list(map(int, input().split())) #수열 저장
+dp = list([] for _ in range(n))
+
+for i in range(n):
+    for j in range(i): #0~i까지
+        if num[i] > num[j]: #비교하려는 수인 i가 더 클 때
+            if len(dp[i]) < len(dp[j]) + 1:
+                dp[i] = dp[j][:] #인덱스를 복사하는 형태로 저장
+
+    dp[i].append(i) #자기 자신 인덱스 저장
+    
+len_dp = list()
+for i in range(n):
+    len_dp.append(len(dp[i]))
+max_index = len_dp.index(max(len_dp)) #최대값 인덱스
+
+print(max(len_dp))
+for index in dp[max_index]:
+    print(num[index], end = ' ')
