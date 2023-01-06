@@ -1,1 +1,0 @@
-print("vscode github연습")
