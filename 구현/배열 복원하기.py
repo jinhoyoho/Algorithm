@@ -14,7 +14,7 @@ for i in range(h):
 
 for i in range(x, h):
     for j in range(y, w):
-        array_a[i][j] -= array_a[i-x][j-y]
+        array_a[i][j] -= array_a[i-x][j-y] #겹치는 부분 빼기
     
 for i in range(h):
     print(*array_a[i])
